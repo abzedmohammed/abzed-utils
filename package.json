@@ -1,0 +1,13 @@
+{
+  "name": "abzed-utils",
+  "version": "1.0.0",
+  "description": "Abzed Mohammed's reusable JS utility functions with auto-completion and config injection",
+  "main": "./src/index.js",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "keywords": ["utils", "vite", "react", "javascript", "abzed"],
+  "author": "Abzed Mohammed",
+  "license": "MIT"
+}
