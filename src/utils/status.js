@@ -1,5 +1,5 @@
 // src/status.js
-import { statuses } from "./data.js";
+import { statuses } from "../data.js";
 
 export const getStatusObj = (status) => {
 	const fallback = {
