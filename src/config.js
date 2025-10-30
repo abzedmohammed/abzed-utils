@@ -1,26 +1,23 @@
-// @ts-check
+// src/config.js
 
 /**
- * @typedef {Object} AbzedUtilsConfig
- * @property {string} [apiUrl]
- * @property {string} [logoutUrl]
- * @property {number} [defaultTimer]
- * @property {string} [logo]
+ * Get environment variable safely (works with Vite and Node).
+ * @param {string} key
+ * @param {string} [fallback=""]
+ * @returns {string}
  */
 
-/** @type {AbzedUtilsConfig} */
-let config = {};
+let _logo = null;
 
-/**
- * Initialize or update global config.
- * @param {AbzedUtilsConfig} options
- */
-export const initUtils = (options = {}) => {
-  config = { ...config, ...options };
+export const getEnv = (key, fallback = "") => {
+	if (typeof import.meta !== "undefined" && import.meta.env)
+		return import.meta.env[key] || fallback;
+	return process?.env?.[key] || fallback;
 };
 
-/**
- * Retrieve the current config.
- * @returns {AbzedUtilsConfig}
- */
-export const getConfig = () => config;
+export const setLogo = (value) => (_logo = value);
+export const getLogo = () => _logo;
+
+export const url = getEnv("VITE_API_URL");
+export const logoutUrl = getEnv("VITE_LOGOUT_URL");
+export const defaultTimer = parseInt(getEnv("VITE_DEFAULT_TIMER", "60"));
