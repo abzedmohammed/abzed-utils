@@ -13,6 +13,7 @@ export const FormInputDatePicker = ({
     format = "DD/MM/YYYY",
     suffixIcon,
     maxDate,
+    minDate
 }) => {
     const [open, setOpen] = useState(false);
 
@@ -59,6 +60,7 @@ export const FormInputDatePicker = ({
                 className={inputClassName}
                 picker={picker}
                 maxDate={maxDate}
+                minDate={minDate}
             />
         </Form.Item>
     );

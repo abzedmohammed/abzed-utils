@@ -5,6 +5,49 @@ export const statuses = [
 		background: '#D8CCF4',
 		color: '#6226EF',
 		dotColor: '#A46BF5',
+		className: 'txt_875',
+	},
+	{
+		status: 'ONGOING',
+		statusName: 'Ongoing',
+		color: '#000088',
+		className: 'txt_875',
+	},
+	{
+		status: 'UPCOMING',
+		statusName: 'Upcoming',
+		color: '#FFB600',
+		className: 'txt_875',
+	},
+	{
+		status: 'CLOSED',
+		statusName: 'Closed',
+		color: '#C00',
+		className: 'txt_875',
+	},
+	{
+		status: 'INCOMPLETE',
+		statusName: 'Incomplete',
+		color: '#D5700D',
+		className: 'txt_875',
+	},
+	{
+		status: 'CHECK_IN',
+		statusName: 'Incomplete',
+		color: '#D5700D',
+		className: 'txt_875',
+	},
+	{
+		status: 'CHECK_OUT',
+		statusName: 'Incomplete',
+		color: '#D5700D',
+		className: 'txt_875',
+	},
+	{
+		status: 'PROCESSED',
+		statusName: 'Processed',
+		color: '#027A48',
+		className: 'txt_875',
 	},
 	{
 		status: 'PENDING',
@@ -12,6 +55,7 @@ export const statuses = [
 		background: '#D8CCF4',
 		color: '#6226EF',
 		dotColor: '#A46BF5',
+		className: 'txt_875',
 	},
 	{
 		status: 'SUBMITTED',
@@ -19,6 +63,7 @@ export const statuses = [
 		background: '#D8CCF4',
 		color: '#6226EF',
 		dotColor: '#A46BF5',
+		className: 'txt_875',
 	},
 	{
 		status: 'COMPLETED',
@@ -26,6 +71,7 @@ export const statuses = [
 		background: '#ECFDF3',
 		color: '#027A48',
 		dotColor: '#12B76A',
+		className: 'txt_875',
 	},
 	{
 		status: 'REJECTED',
@@ -33,5 +79,14 @@ export const statuses = [
 		background: '#F4CFCC',
 		color: '#EF3826',
 		dotColor: '#E63625',
+		className: 'txt_875',
+	}, 
+	{
+		status: 'FAILED',
+		statusName: 'Failed',
+		background: '#F4CFCC',
+		color: '#EF3826',
+		dotColor: '#E63625',
+		className: 'txt_875',
 	}, 
 ];

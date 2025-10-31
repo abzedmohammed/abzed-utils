@@ -31,3 +31,8 @@ export const formatTime = (timeString = "") => {
 	if (timeString.split(":").length === 3) return timeString.slice(0, 5);
 	return timeString;
 };
+
+export const formatToLocalDateTime = (dayjsObj) => {
+  if (!dayjsObj) return null;
+  return dayjsObj.tz("Africa/Nairobi").format("YYYY-MM-DDTHH:mm:ss");
+};
