@@ -1,1 +1,1 @@
-export * from "./PrimaryDropdown.jsx";
+export { default as PrimaryDropdown } from "./PrimaryDropdown.jsx";

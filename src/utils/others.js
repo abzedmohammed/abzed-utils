@@ -22,3 +22,9 @@ export const removeEmptyChildren = (data = []) => {
 		return cleanedItem;
 	});
 };
+
+export const handleOpenChange = (open, item, setState) => {
+    if (open) {
+        setState(item);
+    }
+};

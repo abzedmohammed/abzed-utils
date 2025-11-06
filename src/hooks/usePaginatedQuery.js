@@ -1,8 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
-import useDebounce from 'use-debounce';
+import { useDebounce } from 'use-debounce';
 import { useQuery } from '@tanstack/react-query';
 
-const usePaginatedQuery = ({
+export const usePaginatedQuery = ({
 	queryConfig, // { queryKey, queryFn }
 	defaultLimit = 10,
 	extraParams = {}, // additional query params
@@ -70,5 +70,3 @@ const usePaginatedQuery = ({
 		body,
 	};
 };
-
-export default usePaginatedQuery;

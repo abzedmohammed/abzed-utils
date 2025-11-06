@@ -1,10 +1,10 @@
 import { Form } from "antd";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import flags from "react-phone-number-input/flags";
 import { useState } from "react";
 
 export const FormInputPhone = ({
+    flags,
     label,
     inputName,
     className,

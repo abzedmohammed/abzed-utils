@@ -9,7 +9,7 @@ export const onSuccess = (message, notifyFn) => {
 
 export const onError = (message, notifyFn) => {
     if (notifyFn) {
-        notifyFn({ id: 3, message });
+        notifyFn({ id: 2, message });
     } else {
         console.error("❌", message);
     }
