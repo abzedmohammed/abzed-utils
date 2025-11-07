@@ -1,6 +1,6 @@
 {
   "name": "abzed-utils",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Abzed Mohammed's reusable JS utility functions with auto-completion and config injection",
   "type": "module",
   "main": "dist/abzed-utils.umd.js",
