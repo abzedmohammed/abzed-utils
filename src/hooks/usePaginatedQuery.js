@@ -37,7 +37,7 @@ export const usePaginatedQuery = ({
 			extraParams,
 		],
 		queryFn: () => queryConfig.queryFn(body),
-		keepPreviousData: true,
+		placeholderData: prev => prev,
 		enabled,
 		refetchInterval: refetchInterval,
 	});

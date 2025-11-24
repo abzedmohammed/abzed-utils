@@ -1,6 +1,6 @@
 import { Input } from "antd";
 
-export const OTPInput = ({ setotp }) => {
+export const OTPInput = ({ setotp, length=4 }) => {
     const onChange = (text) => {
         setotp(text);
     };
@@ -13,7 +13,7 @@ export const OTPInput = ({ setotp }) => {
         <>
             <div className="flex items-center justify-center">
                 <Input.OTP
-                    length={4}
+                    length={length}
                     formatter={(str) => str.toUpperCase()}
                     {...sharedProps}
                 />
