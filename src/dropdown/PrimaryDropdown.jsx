@@ -23,8 +23,8 @@ const PrimaryDropdown = forwardRef(({
 			trigger={trigger}
 			placement={placement}
 			menu={{ items }}
-			overlayClassName={overlayClassName}
-			overlayStyle={overlayStyle}
+			classNames={overlayClassName}
+			style={overlayStyle}
 		>
             <div onClick={(e) => e.preventDefault()}>
                 <Space>{triggerButton}</Space>

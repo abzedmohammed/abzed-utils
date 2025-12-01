@@ -15,7 +15,7 @@ export const DynamicBtn = ({
 		<Button
 			size='large'
 			icon={icon}
-			iconPosition={iconPosition}
+			iconPlacement={iconPosition}
 			loading={isProcessing}
 			style={{
 				width: width ? width : 'fit-content',
