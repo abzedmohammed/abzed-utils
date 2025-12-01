@@ -11,6 +11,8 @@ export const FormInputTextArea = ({
     rows = 3,
     readOnly,
     disabled,
+    extraRules = [],
+    cols
 }) => {
     return (
         <Form.Item
@@ -19,6 +21,7 @@ export const FormInputTextArea = ({
                     required: required,
                     message: "Field is required",
                 },
+                ...extraRules,
             ]}
             name={inputName}
             className={className}
@@ -28,6 +31,7 @@ export const FormInputTextArea = ({
                 disabled={disabled}
                 readOnly={readOnly}
                 rows={rows}
+                cols={cols}
                 className={inputClassName}
                 placeholder={placeholder}
             />

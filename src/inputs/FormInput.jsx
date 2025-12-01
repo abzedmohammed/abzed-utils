@@ -10,6 +10,7 @@ export const FormInput = ({
     readOnly,
     prefix,
     suffix,
+    extraRules = [],
 }) => {
     return (
         <Form.Item
@@ -18,6 +19,7 @@ export const FormInput = ({
                     required: required,
                     message: "Field is required",
                 },
+                ...extraRules,
             ]}
             name={inputName}
             className={className}

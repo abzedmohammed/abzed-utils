@@ -13,6 +13,7 @@ export const FormInputPassword = ({
     iconRenderShow,
     iconRenderHide,
     showIconRender,
+    extraRules = [],
 }) => {
     return (
         <Form.Item
@@ -21,6 +22,7 @@ export const FormInputPassword = ({
                     required: required,
                     message: "Field is required",
                 },
+                ...extraRules,
             ]}
             className={className}
             name={inputName}

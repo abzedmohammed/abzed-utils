@@ -13,6 +13,7 @@ export const FormInputPhone = ({
     defaultCountry = "KE",
     readOnly,
     placeholder = "Enter phone number",
+    extraRules = [],
 }) => {
     const [value, setValue] = useState("");
 
@@ -23,6 +24,7 @@ export const FormInputPhone = ({
                     required: required,
                     message: "Field is required",
                 },
+                ...extraRules,
             ]}
             className={className}
             name={inputName}

@@ -10,6 +10,11 @@ export const FormInputNumber = ({
     readOnly,
     prefix,
     suffix,
+    formatter,
+    parser,
+    extraRules = [],
+    min,
+    max,
 }) => {
     return (
         <Form.Item
@@ -18,12 +23,17 @@ export const FormInputNumber = ({
                     required: required,
                     message: "Field is required",
                 },
+                ...extraRules,
             ]}
             name={inputName}
             className={className}
             label={label}
         >
             <InputNumber
+                min={min}
+                max={max}
+                formatter={formatter}
+                parser={parser}
                 prefix={prefix}
                 suffix={suffix}
                 className={inputClassName}
@@ -32,4 +42,4 @@ export const FormInputNumber = ({
             />
         </Form.Item>
     );
-}
+};

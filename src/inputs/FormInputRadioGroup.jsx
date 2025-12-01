@@ -11,6 +11,7 @@ export const FormInputRadioGroup = ({
     required = true,
     inputClassName,
     disabled,
+    extraRules = [],
 }) => {
     const [value, setvalue] = useState(radioValue);
 
@@ -32,6 +33,7 @@ export const FormInputRadioGroup = ({
                     required: required,
                     message: "Field is required",
                 },
+                ...extraRules,
             ]}
             name={inputName}
             className={className}

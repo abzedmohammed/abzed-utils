@@ -17,3 +17,4 @@ export * from './NormalInputTextArea.jsx';
 export * from './NormalInputTimePicker.jsx';
 export * from './OTPInput.jsx';
 export * from './SearchSelectInput.jsx';
+export * from './MainSearch.jsx';

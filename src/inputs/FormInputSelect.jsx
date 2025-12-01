@@ -15,6 +15,7 @@ export const FormInputSelect = ({
 	showSearch,
 	mode = null,
 	maxTagCount = 1,
+	extraRules = [],
 }) => {
 	return (
 		<Form.Item
@@ -23,6 +24,7 @@ export const FormInputSelect = ({
 					required: required,
 					message: 'Field is required',
 				},
+				...extraRules,
 			]}
 			className={className}
 			name={inputName}

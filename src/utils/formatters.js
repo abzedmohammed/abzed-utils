@@ -36,3 +36,8 @@ export const formatToLocalDateTime = (dayjsObj) => {
   if (!dayjsObj) return null;
   return dayjsObj.tz("Africa/Nairobi").format("YYYY-MM-DDTHH:mm:ss");
 };
+
+export const formatNumberAddComma = (num) => {
+    if (num === null || num === undefined) return;
+    return new Intl.NumberFormat("en-US").format(num);
+};

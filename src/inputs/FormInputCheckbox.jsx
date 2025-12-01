@@ -7,6 +7,7 @@ export const FormInputCheckbox = ({
     checkboxClass,
     required = true,
     disabled,
+    extraRules = [],
 }) => {
     return (
         <Form.Item
@@ -15,6 +16,7 @@ export const FormInputCheckbox = ({
                     required: required,
                     message: "Field is required",
                 },
+                ...extraRules,
             ]}
             className={className}
             name={inputName}
