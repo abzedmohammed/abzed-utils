@@ -5,6 +5,7 @@
 
 ## Source Of Truth
 - Treat `C:/Users/ibraa/Documents/UTILS/abzed-utils` as the canonical reference implementation.
+- Published package reference: `https://www.npmjs.com/package/abzed-utils` (current published version: `2.0.0`).
 - Start by reading:
 - `README.md`
 - `package.json`
