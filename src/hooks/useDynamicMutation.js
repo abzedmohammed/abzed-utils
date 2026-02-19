@@ -2,6 +2,9 @@ import { useDispatch } from "react-redux";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
+const getByPath = (obj, path = []) =>
+    path.reduce((acc, key) => acc?.[key], obj);
+
 export const useDynamicMutation = ({
     mutationFn,
     onSuccess,
@@ -9,23 +12,42 @@ export const useDynamicMutation = ({
     invalidateQueryKeys = [],
     meta = {},
     redirectTo,
+    extractResponse = (data) => getByPath(data, ["data"]),
+    isResponseSuccess = (response) => getByPath(response, ["success"]),
+    extractResponseMessage = (response) => getByPath(response, ["message"]),
+    extractBackendErrorMessage = (error) =>
+        getByPath(error, ["response", "data", "message"]),
 }) => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const invokeOnError = (message, variables, context, extras = {}) => {
+        if (!onError) return;
+
+        const payload = { variables, context, ...extras };
+
+        if (onError.length <= 2) {
+            onError(message, payload);
+            return;
+        }
+
+        onError(message, variables, context, payload);
+    };
 
     return useMutation({
         mutationFn,
         onSuccess: async (data, variables, context) => {
             await Promise.all(
                 invalidateQueryKeys.map((key) =>
-                    queryClient.invalidateQueries({ queryKey: key })
-                )
+                    queryClient.invalidateQueries({
+                        queryKey: Array.isArray(key) ? key : [key],
+                    }),
+                ),
             );
 
-            if (data?.data?.success) {
-                const response = data?.data;
-                const { form } = variables;
+            const response = extractResponse(data);
+            if (isResponseSuccess(response)) {
+                const form = variables?.form;
 
                 await onSuccess?.({
                     response,
@@ -36,32 +58,23 @@ export const useDynamicMutation = ({
                 });
 
                 if (redirectTo) {
-                    await navigate(redirectTo);
+                    navigate(redirectTo);
                 }
             } else {
-                const message = data?.data?.message || "An error occurred";
-                if (onError) {
-                    onError(message, { variables, context });
-                }
+                const message =
+                    extractResponseMessage(response) || "An error occurred";
+                invokeOnError(message, variables, context, { response });
             }
         },
         onError: (error, variables, context) => {
-            const backendMessage = error?.response?.data?.message;
+            const backendMessage = extractBackendErrorMessage(error);
             const message =
                 backendMessage ||
                 error?.message ||
                 "An unexpected error occurred";
 
-            if (onError) {
-                onError(message, variables, context);
-            }
+            invokeOnError(message, variables, context, { error });
         },
-        // onError: (error, variables, context) => {
-        //     const message = error?.message || "An unexpected error occurred";
-        //     if (onError) {
-        //         onError(message, { variables, context });
-        //     }
-        // },
         meta,
     });
 };

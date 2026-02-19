@@ -1,7 +1,6 @@
 import { Form } from "antd";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import { useState } from "react";
 
 export const FormInputPhone = ({
     flags,
@@ -15,8 +14,6 @@ export const FormInputPhone = ({
     placeholder = "Enter phone number",
     extraRules = [],
 }) => {
-    const [value, setValue] = useState("");
-
     return (
         <Form.Item
             rules={[
@@ -29,6 +26,7 @@ export const FormInputPhone = ({
             className={className}
             name={inputName}
             label={label}
+            getValueFromEvent={(value) => value}
         >
             <PhoneInput
                 readOnly={readOnly}
@@ -36,10 +34,8 @@ export const FormInputPhone = ({
                 international
                 flags={flags}
                 defaultCountry={defaultCountry}
-                value={value}
-                onChange={setValue}
                 placeholder={placeholder}
             />
         </Form.Item>
     );
-}
+};

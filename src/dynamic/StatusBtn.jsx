@@ -1,13 +1,16 @@
-export const Statusbtn = ({ status }) => {
+const StatusBtn = ({ status = {} }) => {
 	const { statusName, color, className } = status;
 
 	return (
 		<span
 			className={className}
 			style={{
-				color: color,
+				color,
 			}}>
 			{statusName}
 		</span>
 	);
-}
+};
+
+export { StatusBtn };
+export const Statusbtn = StatusBtn;

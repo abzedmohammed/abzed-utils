@@ -12,7 +12,7 @@ export const DynamicDrawer = ({
         <Drawer
             className="primary_drawer"
             placement={placement}
-            size={width}
+            width={width}
             onClose={handleClose}
             open={open}
         >

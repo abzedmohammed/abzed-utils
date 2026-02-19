@@ -2,19 +2,35 @@
  * Validate file before upload.
  * @param {string[]} allowedTypes
  * @param {number} sizeLimitMB
+ * @param {(message: string, file: File) => void} [onValidationError]
  */
-export const createBeforeUpload = (allowedTypes = [], sizeLimitMB = 2) => {
+export const createBeforeUpload = (
+    allowedTypes = [],
+    sizeLimitMB = 2,
+    onValidationError,
+) => {
     return (file) => {
-        const isAllowedType = allowedTypes.includes(file.type);
+        const hasTypeRestrictions =
+            Array.isArray(allowedTypes) && allowedTypes.length > 0;
+        const isAllowedType = hasTypeRestrictions
+            ? allowedTypes.includes(file.type)
+            : true;
+
         if (!isAllowedType) {
-            return `Only allowed file types: ${allowedTypes.join(", ")}.`;
+            const message = `Only allowed file types: ${allowedTypes.join(
+                ", ",
+            )}.`;
+            onValidationError?.(message, file);
+            return false;
         }
 
-        const isWithinSize = file.size / 1024 / 1024 < sizeLimitMB;
+        const isWithinSize = file.size / 1024 / 1024 <= sizeLimitMB;
         if (!isWithinSize) {
-            return `File must be smaller than ${sizeLimitMB}MB.`;
+            const message = `File must be smaller than or equal to ${sizeLimitMB}MB.`;
+            onValidationError?.(message, file);
+            return false;
         }
 
-        return isAllowedType && isWithinSize;
+        return true;
     };
 };

@@ -1,16 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useFetch = ({ url, dependency, onRequestError }) => {
-    const token = localStorage.getItem("token");
-
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState("");
     const [data, setData] = useState([]);
+    const onRequestErrorRef = useRef(onRequestError);
 
     useEffect(() => {
+        onRequestErrorRef.current = onRequestError;
+    }, [onRequestError]);
+
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
         const fetchData = async () => {
             setIsLoading(true);
             try {
+                const token = localStorage.getItem("token");
                 const headers = {
                     "Content-Type": "application/json",
                 };
@@ -23,29 +30,42 @@ export const useFetch = ({ url, dependency, onRequestError }) => {
                     method: "GET",
                     headers,
                     credentials: "include",
+                    signal: controller.signal,
                 });
 
                 if (!res.ok) {
                     if ([401, 403, 400].includes(res.status)) {
-                        onRequestError()
+                        onRequestErrorRef.current?.();
                     }
-                    setIsError("Request failed");
-                    setIsLoading(false);
+                    if (isMounted) {
+                        setIsError("Request failed");
+                    }
                     return;
                 }
 
                 const response = await res.json();
-                setData(response?.data?.result || []);
-                setIsError("");
+                if (isMounted) {
+                    setData(response?.data?.result || []);
+                    setIsError("");
+                }
             } catch (error) {
-                setIsError(error.message || "An error occurred");
+                if (error?.name !== "AbortError" && isMounted) {
+                    setIsError(error.message || "An error occurred");
+                }
+            } finally {
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
-
-            setIsLoading(false);
         };
 
         fetchData();
-    }, [url, dependency, token]);
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, [url, dependency]);
 
     return { isLoading, isError, data };
 };

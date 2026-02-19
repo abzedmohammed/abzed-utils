@@ -1,5 +1,4 @@
 import { Table } from 'antd';
-import { useEffect, useState } from 'react';
 
 export const MainTable = ({
 	rowKey,
@@ -11,24 +10,25 @@ export const MainTable = ({
 	pagination,
 	rowSelection
 }) => {
-	const [data, setdata] = useState(dataSource);
-
-	useEffect(() => {
-		setdata(dataSource);
-	}, [dataSource]);
+	const tableScroll =
+		scroll && typeof scroll === 'object'
+			? scroll
+			: scroll
+				? { x: scroll }
+				: undefined;
 
 	return (
 		<div className="max-w-full w-full overflow-x-auto">
 			<Table
 				rowSelection={rowSelection}
 				loading={loading}
-				scroll={{ x: scroll }}
+				scroll={tableScroll}
 				pagination={pagination}
 				rowKey={rowKey}
 				className={className}
 				columns={columns}
-				dataSource={data}
+				dataSource={dataSource}
 			/>
 		</div>
 	);
-}
+};

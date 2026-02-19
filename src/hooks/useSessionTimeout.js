@@ -1,17 +1,17 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const useSessionTimeout = (logoutCallback, timeout = 5 * 60 * 1000) => {
 	const navigate = useNavigate();
 	const timeoutId = useRef(null);
 
-	const resetTimeout = () => {
+	const resetTimeout = useCallback(() => {
 		if (timeoutId.current) clearTimeout(timeoutId.current);
 		timeoutId.current = setTimeout(() => {
 			logoutCallback();
 			navigate('/auth/login');
 		}, timeout);
-	};
+	}, [logoutCallback, navigate, timeout]);
 
 	useEffect(() => {
 		const events = ['mousemove', 'keydown', 'click', 'scroll'];
@@ -26,5 +26,5 @@ export const useSessionTimeout = (logoutCallback, timeout = 5 * 60 * 1000) => {
 			);
 			if (timeoutId.current) clearTimeout(timeoutId.current);
 		};
-	}, []);
+	}, [resetTimeout]);
 };

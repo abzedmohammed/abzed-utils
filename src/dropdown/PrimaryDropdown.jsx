@@ -1,30 +1,41 @@
-import { Dropdown } from "antd";
-import { Space } from "antd";
+import { Dropdown, Space } from "antd";
 import { forwardRef } from 'react';
 import { defaultDropdownOverlayStyle } from "../utils";
 
 const PrimaryDropdown = forwardRef(({
 	items,
 	triggerButton,
-	overlayStyle,
+	overlayStyle = defaultDropdownOverlayStyle,
 	placement = 'bottom',
-    trigger = 'click',
+    trigger = ['click'],
     className,
-    overlayClassName=defaultDropdownOverlayStyle,
+    overlayClassName,
     disabled,
     onOpenChange,
 }, ref) => {
+    const normalizedTrigger = Array.isArray(trigger) ? trigger : [trigger];
+    const overlayClassNameIsString = typeof overlayClassName === 'string';
+    const resolvedOverlayClassName = overlayClassNameIsString
+        ? overlayClassName
+        : undefined;
+    const resolvedOverlayStyle =
+        overlayClassName &&
+        typeof overlayClassName === 'object' &&
+        !Array.isArray(overlayClassName)
+            ? overlayClassName
+            : overlayStyle;
+
 	return (
         <Dropdown
 			ref={ref}
 			disabled={disabled}
 			onOpenChange={onOpenChange}
 			className={className}
-			trigger={trigger}
+			trigger={normalizedTrigger}
 			placement={placement}
 			menu={{ items }}
-			classNames={overlayClassName}
-			style={overlayStyle}
+            overlayClassName={resolvedOverlayClassName}
+            overlayStyle={resolvedOverlayStyle}
 		>
             <div onClick={(e) => e.preventDefault()}>
                 <Space>{triggerButton}</Space>

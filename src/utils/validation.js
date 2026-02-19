@@ -9,29 +9,21 @@ export const validatePassword = (password = "") => {
 
 export const isValidCoordinate = (value, system, type) => {
 	const parsed = parseFloat(value);
+	const supportedSystems = ['WGS84', 'Arc 1960'];
 
 	if (isNaN(parsed)) return false;
+	if (!supportedSystems.includes(system)) return false;
 
 	const decimalPlaces = value?.toString().split('.')[1]?.length || 0;
 
 	if (decimalPlaces < 5) return false;
 
-	if (system === 'WGS84') {
-		if (type === 'latitude') {
-			return parsed >= -4.7 && parsed <= 5.2;
-		}
-		if (type === 'longitude') {
-			return parsed >= 33.5 && parsed <= 42.1;
-		}
+	if (type === 'latitude') {
+		return parsed >= -4.7 && parsed <= 5.2;
 	}
 
-	if (system === 'Arc 1960') {
-		if (type === 'latitude') {
-			return parsed >= -4.7 && parsed <= 5.2;
-		}
-		if (type === 'longitude') {
-			return parsed >= 33.5 && parsed <= 42.1;
-		}
+	if (type === 'longitude') {
+		return parsed >= 33.5 && parsed <= 42.1;
 	}
 
 	return false;

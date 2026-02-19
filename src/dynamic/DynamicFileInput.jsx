@@ -18,9 +18,9 @@ export const DynamicFileInput = ({
 	const [isLoading, setLoading] = useState(false);
 
 	const customUpload = async ({ file, onSuccess, onError }) => {
-		try {
-			await setLoading(true);
+		setLoading(true);
 
+		try {
 			const res = await dispatch(uploadFile(file));
 
 			if (res?.payload?.success) {
@@ -28,16 +28,15 @@ export const DynamicFileInput = ({
 					url: String(res?.payload?.targetUrl ?? ''),
 					size: file?.size,
 					name: file.name
-				}				
+				};
 
-				onSuccess(fileObj);
-				setLoading(false);
+				onSuccess?.(fileObj);
 			} else {
-				onError('Upload failed');
-				setLoading(false);
+				onError?.('Upload failed');
 			}
 		} catch (err) {
-			onError(err?.message);
+			onError?.(err?.message || 'Upload failed');
+		} finally {
 			setLoading(false);
 		}
 	};
@@ -56,13 +55,13 @@ export const DynamicFileInput = ({
 						customUpload({
 							...options,
 							onSuccess: (res) => {
-								handleFileChange(res);
-								onSuccess(
+								handleFileChange?.(res);
+								onSuccess?.(
 									`${options?.file?.name} file uploaded successfully.`
 								);
 							},
 							onError: () =>
-								onError(
+								onError?.(
 									`${options?.file?.name} file upload failed.`
 								),
 						})
