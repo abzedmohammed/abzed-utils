@@ -18,6 +18,7 @@ export const NormalInputNumber = ({
     parser,
     min,
     max,
+    disabled = false,
 }) => {
     return (
         <div style={defaultInputStyle({ width, gap })}>
@@ -34,6 +35,7 @@ export const NormalInputNumber = ({
                 className={inputClassName}
                 placeholder={placeholder}
                 onBlur={onBlur}
+                disabled={disabled}
             />
         </div>
     );

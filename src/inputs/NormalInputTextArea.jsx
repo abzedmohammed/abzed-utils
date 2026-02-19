@@ -15,6 +15,7 @@ export const NormalInputTextArea = ({
 	gap = '.5rem',
 	rows = 3,
 	cols,
+	disabled = false,
 }) => {
 	return (
 		<div style={defaultInputStyle({ width, gap })}>
@@ -28,6 +29,7 @@ export const NormalInputTextArea = ({
 				onBlur={onBlur}
 				rows={rows}
 				cols={cols}
+				disabled={disabled}
 			/>
 		</div>
 	);

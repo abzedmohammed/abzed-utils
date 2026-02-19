@@ -1,9 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import { queryClient } from '../queryClient';
 
+const getByPath = (obj, path = []) =>
+	path.reduce((acc, key) => acc?.[key], obj);
+const DEFAULT_RESULT_PATH = ['data', 'data', 'data', 'result'];
+
 export const useAllCachedResults = ({
 	baseKey,
-	extractor = (state) => state?.data?.data?.data?.result,
+	extractor,
+	resultPath = DEFAULT_RESULT_PATH,
 }) => {
 	const [results, setResults] = useState([]);
 	const prevResultsRef = useRef([]);
@@ -16,7 +21,9 @@ export const useAllCachedResults = ({
 				.getQueryCache()
 				.findAll({ queryKey: [baseKey] })
 				.flatMap((query) => {
-					const extracted = extractor(query.state);
+					const extracted = extractor
+						? extractor(query.state)
+						: getByPath(query.state, resultPath);
 					return Array.isArray(extracted) ? extracted : [];
 				});
 
@@ -38,7 +45,7 @@ export const useAllCachedResults = ({
 			mounted = false;
 			unsubscribe();
 		};
-	}, [baseKey, extractor]);
+	}, [baseKey, extractor, resultPath]);
 
 	return results;
 }

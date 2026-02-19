@@ -2,6 +2,9 @@ import { useState, useMemo, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 import { useQuery } from '@tanstack/react-query';
 
+const getByPath = (obj, path = []) =>
+	path.reduce((acc, key) => acc?.[key], obj);
+
 export const usePaginatedQuery = ({
 	queryConfig, // { queryKey, queryFn }
 	defaultLimit = 10,
@@ -9,7 +12,10 @@ export const usePaginatedQuery = ({
 	searchDelay = 400,
 	enabled = true,
 	resetPagination,
-	refetchInterval=null,
+	refetchInterval = null,
+	extractTotal = (response) => getByPath(response, ['data', 'total']),
+	extractDataList = (response) =>
+		getByPath(response, ['data', 'data', 'result']),
 }) => {
 	const [selectedObj, setSelectedObj] = useState({});
 	const [currentPage, setCurrentPage] = useState(1);
@@ -39,11 +45,12 @@ export const usePaginatedQuery = ({
 		queryFn: () => queryConfig.queryFn(body),
 		placeholderData: prev => prev,
 		enabled,
-		refetchInterval: refetchInterval,
+		refetchInterval,
 	});
 
-	const total = data?.data?.total || 0;
-	const dataList = data?.data?.data?.result || [];
+	const total = extractTotal(data) ?? 0;
+	const rawDataList = extractDataList(data);
+	const dataList = Array.isArray(rawDataList) ? rawDataList : [];
 
 	useEffect(() => {
 		setCurrentPage(1);

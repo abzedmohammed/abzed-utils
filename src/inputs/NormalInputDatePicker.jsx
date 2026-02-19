@@ -18,6 +18,7 @@ export const NormalInputDatePicker = ({
 	onBlur = null,
 	width = '100%',
 	gap = '.5rem',
+	disabled = false,
 }) => {
 	const [open, setOpen] = useState(false);
 
@@ -58,6 +59,7 @@ export const NormalInputDatePicker = ({
 				picker={picker}
 				maxDate={maxDate}
 				onBlur={onBlur}
+				disabled={disabled}
 			/>
 		</div>
 	);

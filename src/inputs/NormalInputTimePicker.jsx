@@ -15,6 +15,7 @@ export const NormalInputTimePicker = ({
 	prefix = null,
 	width = '100%',
 	gap = '.5rem',
+	disabled = false,
 }) => {
 	return (
 		<div style={defaultInputStyle({ width, gap })}>
@@ -34,6 +35,7 @@ export const NormalInputTimePicker = ({
 				className={inputClassName}
 				placeholder={placeholder}
 				format={format}
+				disabled={disabled}
 			/>
 		</div>
 	);

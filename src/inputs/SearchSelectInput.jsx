@@ -15,52 +15,48 @@ export const SearchSelectInput = ({
 	showSearch,
 	onDeselect = null,
 	fetchFunc,
+	extractResults = (rawData) => rawData?.data?.data?.result,
 	transformResults = null,
 	width = '100%',
 	gap = '.5rem',
 }) => {
 	const [isFetching, setIsFetching] = useState(false);
 	const [fetchedData, setFetchedData] = useState([]);
-	const [allData, setallData] = useState([]);
+	const [allData, setAllData] = useState([]);
 
 	const timeoutRef = useRef(null);
 
 	const handleKeyValueChange = (val, option) => {
-		
-		if (onChange) {
-			const response = {
-				value: val,
-				inputName,
-				label: option?.label,
-				allData,
-			}
-			onChange(response);
-		}
+		onChange?.({
+			value: val,
+			inputName,
+			label: option?.label,
+			allData,
+		});
 	};
 
 	const handleSearch = (searchTerm) => {
 		if (!fetchFunc) return;
 
-		if (timeoutRef.current) {
-			clearTimeout(timeoutRef.current);
-		}
+		if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
 		timeoutRef.current = setTimeout(async () => {
 			setIsFetching(true);
 
 			try {
 				const rawData = await fetchFunc(searchTerm);
-
+				const results = extractResults(rawData);
+				const safeResults = Array.isArray(results) ? results : [];
 				const mappedData = transformResults
-					? transformResults(rawData?.data?.data?.result)
-					: rawData;
+					? transformResults(safeResults, rawData)
+					: safeResults;
 
-				setallData(rawData?.data?.data?.result);
+				setAllData(safeResults);
 				setFetchedData(Array.isArray(mappedData) ? mappedData : []);
 			} catch (error) {
 				console.error('SearchInput fetch error:', error);
 				setFetchedData([]);
-				setallData([]);
+				setAllData([]);
 			} finally {
 				setIsFetching(false);
 			}
@@ -68,11 +64,7 @@ export const SearchSelectInput = ({
 	};
 
 	useEffect(() => {
-		return () => {
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current);
-			}
-		};
+		return () => timeoutRef.current && clearTimeout(timeoutRef.current);
 	}, []);
 
 	return (
