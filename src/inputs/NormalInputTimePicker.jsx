@@ -1,4 +1,5 @@
 import { TimePicker } from 'antd';
+import PropTypes from 'prop-types';
 import { defaultInputStyle } from '../utils';
 
 export const NormalInputTimePicker = ({
@@ -7,6 +8,7 @@ export const NormalInputTimePicker = ({
 	inputName,
 	recordKey,
     onChange,
+	onValueChange,
 	placeholder,
 	inputClassName,
 	readOnly = false,
@@ -17,16 +19,18 @@ export const NormalInputTimePicker = ({
 	gap = '.5rem',
 	disabled = false,
 }) => {
+	const resolvedOnChange = onValueChange ?? onChange;
+
 	return (
 		<div style={defaultInputStyle({ width, gap })}>
-			<label>{label}</label>
+			{label && <label>{label}</label>}
             <TimePicker
                 prefix={prefix}
                 suffixIcon={suffixIcon}
-                readOnly={readOnly}
+				readOnly={readOnly}
 				value={value}
 				onChange={(val) =>
-					onChange(
+					resolvedOnChange?.(
 						val ? val.format(format) : null,
 						inputName,
 						recordKey
@@ -39,4 +43,22 @@ export const NormalInputTimePicker = ({
 			/>
 		</div>
 	);
-}
+};
+
+NormalInputTimePicker.propTypes = {
+	label: PropTypes.node,
+	value: PropTypes.object,
+	inputName: PropTypes.string,
+	recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	onChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	placeholder: PropTypes.string,
+	inputClassName: PropTypes.string,
+	readOnly: PropTypes.bool,
+	format: PropTypes.string,
+	suffixIcon: PropTypes.node,
+	prefix: PropTypes.node,
+	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	gap: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	disabled: PropTypes.bool,
+};

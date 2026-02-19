@@ -1,4 +1,5 @@
 import { Form, Upload } from 'antd';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { TextDynamic } from './TextDynamic';
@@ -7,17 +8,31 @@ export const DynamicFileInput = ({
 	className,
 	inputClassName,
 	handleFileChange,
+	onFileChange,
 	label,
 	beforeUpload,
 	dynamicBody,
+	children,
 	uploadFile,
 	onSuccess,
+	onUploadSuccess,
 	onError,
+	onUploadError,
+	accept = '*',
 }) => {
 	const dispatch = useDispatch();
 	const [isLoading, setLoading] = useState(false);
+	const resolvedOnFileChange = onFileChange ?? handleFileChange;
+	const resolvedOnSuccess = onUploadSuccess ?? onSuccess;
+	const resolvedOnError = onUploadError ?? onError;
+	const resolvedBody = children ?? dynamicBody;
 
 	const customUpload = async ({ file, onSuccess, onError }) => {
+		if (typeof uploadFile !== 'function') {
+			onError?.('uploadFile function is required');
+			return;
+		}
+
 		setLoading(true);
 
 		try {
@@ -45,7 +60,7 @@ export const DynamicFileInput = ({
 		<Form.Item label={label} className={className}>
 			<div className='w-full h-full'>
 				<Upload
-					accept='*'
+					accept={accept}
 					name='file'
 					listType='picture-card'
 					className={inputClassName}
@@ -55,13 +70,13 @@ export const DynamicFileInput = ({
 						customUpload({
 							...options,
 							onSuccess: (res) => {
-								handleFileChange?.(res);
-								onSuccess?.(
+								resolvedOnFileChange?.(res);
+								resolvedOnSuccess?.(
 									`${options?.file?.name} file uploaded successfully.`
 								);
 							},
 							onError: () =>
-								onError?.(
+								resolvedOnError?.(
 									`${options?.file?.name} file upload failed.`
 								),
 						})
@@ -72,10 +87,27 @@ export const DynamicFileInput = ({
 							className={'txt_75 text-[#6B7280] animate-pulse'}
 						/>
 					) : (
-						dynamicBody
+						resolvedBody
 					)}
 				</Upload>
 			</div>
 		</Form.Item>
 	);
-}
+};
+
+DynamicFileInput.propTypes = {
+	className: PropTypes.string,
+	inputClassName: PropTypes.string,
+	handleFileChange: PropTypes.func,
+	onFileChange: PropTypes.func,
+	label: PropTypes.node,
+	beforeUpload: PropTypes.func,
+	dynamicBody: PropTypes.node,
+	children: PropTypes.node,
+	uploadFile: PropTypes.func,
+	onSuccess: PropTypes.func,
+	onUploadSuccess: PropTypes.func,
+	onError: PropTypes.func,
+	onUploadError: PropTypes.func,
+	accept: PropTypes.string,
+};

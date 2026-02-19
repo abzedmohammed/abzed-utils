@@ -31,6 +31,10 @@ import { formatMoney, FormInput, useDynamicMutation } from "abzed-utils";
 console.log(formatMoney(1234.56, "KES"));
 ```
 
+## Runtime Validation
+
+`abzed-utils` now includes runtime prop validation with `prop-types` across exported UI wrappers, helping catch incorrect prop usage early during development.
+
 ## Exported Modules
 
 `abzed-utils` exports:
@@ -188,20 +192,45 @@ onError(message, variables, context, { variables, context, response, error })
 | `SearchSelectInput` | Async searchable select with pluggable fetch/transform logic. |
 | `MainSearch` | Simple reusable search input wrapper. |
 
+## API Consistency And Compatibility Aliases
+
+Preferred props are supported while legacy props still work to avoid breaking existing usage.
+
+| Component | Preferred | Legacy (still supported) |
+| --- | --- | --- |
+| `DynamicBtn` | `onClick`, `loading`, `children` | `handleClick`, `isProcessing`, `text` |
+| `DynamicDrawer` | `onClose`, `title`, `children`, `size` | `handleClose`, `drawerTitle`, `drawerBody`, `width` |
+| `PrimaryModal` | `onClose`, `header`, `children` | `handleCancel`, `modalHeader`, `body` |
+| `ActionModal` | `onClose`, `icon`, `header`, `actions` | `handleCloseModal`, `iconComponent`, `headerComponent`, `buttonComponent` |
+| `DynamicFileInput` | `onFileChange`, `onUploadSuccess`, `onUploadError`, `children` | `handleFileChange`, `onSuccess`, `onError`, `dynamicBody` |
+| `MainSearch` | `onSearchChange` | `handleSearchChange` |
+| Normal/Form input wrappers | `onValueChange` | `onChange` |
+
+### Select Wrapper Notes
+
+- `showSearch` supports both `boolean` and object config.
+- Search behavior props are aligned with modern AntD API by passing search settings through `showSearch` object.
+- `mode="default"` is normalized internally for compatibility with AntD `Select`.
+
+### SearchSelectInput Notes
+
+- Added `debounceMs` prop (default `300`) for fetch debounce control.
+- `mode` supports `default`, `multiple`, and `tags`.
+
 ## Form / Table / Dropdown / Modal / Dynamic Components
 
 | Module | Export | Description |
 | --- | --- | --- |
 | form | `AntdForm` | Shared AntD form wrapper with vertical layout and hydrated initial values. |
-| dropdown | `PrimaryDropdown` | Dropdown wrapper with overlay style/class support. |
+| dropdown | `PrimaryDropdown` | Dropdown wrapper aligned to AntD `classNames/styles` with legacy overlay compatibility. |
 | tables | `MainTable` | Responsive AntD table wrapper with optional scroll and row selection. |
 | loaders | `CardSkeleton` | Skeleton block component. |
-| modals | `PrimaryModal` | Base modal wrapper. |
-| modals | `ActionModal` | Action-focused modal built on `PrimaryModal`. |
+| modals | `PrimaryModal` | Base modal wrapper with standardized close/header/body aliases. |
+| modals | `ActionModal` | Action-focused modal built on `PrimaryModal` with alias-safe props. |
 | dynamic | `TextDynamic` | Dynamic text/tag renderer. |
-| dynamic | `DynamicBtn` | Loading-capable button wrapper. |
+| dynamic | `DynamicBtn` | Loading-capable button wrapper with standardized click/loading props. |
 | dynamic | `EmptyState` | Empty state wrapper (`<Empty />`). |
-| dynamic | `DynamicDrawer` | Drawer wrapper with customizable placement and width. |
+| dynamic | `DynamicDrawer` | Drawer wrapper with customizable placement and size (`width` compatibility alias). |
 | dynamic | `StatusBtn`, `Statusbtn` | Status text renderer (legacy and canonical names exported). |
 | dynamic | `DynamicFileInput` | Upload UI wrapper with custom upload flow support. |
 
@@ -219,7 +248,10 @@ onError(message, variables, context, { variables, context, response, error })
 - `createBeforeUpload` now returns strict boolean for AntD Upload compatibility.
 - `useDynamicMutation` keeps backward compatibility for legacy and extended `onError` callback styles.
 - `usePrefersDarkMode` is now exported through root hooks exports.
-- Dropdown/drawer/table/form wrappers were aligned to expected AntD behavior.
+- Deprecated AntD wrapper props were removed/migrated to current AntD API.
+- Runtime `PropTypes` contracts were added across UI wrappers.
+- Wrapper APIs were standardized with compatibility aliases (`onClose`, `onClick`, `loading`, `onValueChange`).
+- Select wrappers now use modern search config patterns and normalized mode handling.
 
 ## Build
 

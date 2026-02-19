@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Select, Spin } from 'antd';
+import PropTypes from 'prop-types';
 import { defaultInputStyle } from '../utils';
 
 export const SearchSelectInput = ({
@@ -10,6 +11,7 @@ export const SearchSelectInput = ({
 	placeholder,
 	inputClassName,
 	onChange,
+	onValueChange,
 	disabled,
 	mode = 'default',
 	showSearch,
@@ -17,6 +19,7 @@ export const SearchSelectInput = ({
 	fetchFunc,
 	extractResults = (rawData) => rawData?.data?.data?.result,
 	transformResults = null,
+	debounceMs = 300,
 	width = '100%',
 	gap = '.5rem',
 }) => {
@@ -25,9 +28,30 @@ export const SearchSelectInput = ({
 	const [allData, setAllData] = useState([]);
 
 	const timeoutRef = useRef(null);
+	const normalizedMode = mode === 'default' ? undefined : mode;
+	const isModeSearchEnabled =
+		normalizedMode === 'multiple' || normalizedMode === 'tags';
+	const hasObjectShowSearch =
+		showSearch &&
+		typeof showSearch === 'object' &&
+		!Array.isArray(showSearch);
+	const shouldEnableSearch =
+		typeof showSearch === 'boolean'
+			? showSearch
+			: hasObjectShowSearch
+				? true
+				: Boolean(fetchFunc) || isModeSearchEnabled;
+	const resolvedShowSearch = shouldEnableSearch
+		? {
+				optionFilterProp: 'label',
+				onSearch: handleSearch,
+				...(hasObjectShowSearch ? showSearch : {}),
+		  }
+		: false;
+	const resolvedOnChange = onValueChange ?? onChange;
 
 	const handleKeyValueChange = (val, option) => {
-		onChange?.({
+		resolvedOnChange?.({
 			value: val,
 			inputName,
 			label: option?.label,
@@ -35,7 +59,7 @@ export const SearchSelectInput = ({
 		});
 	};
 
-	const handleSearch = (searchTerm) => {
+	function handleSearch(searchTerm) {
 		if (!fetchFunc) return;
 
 		if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -60,8 +84,8 @@ export const SearchSelectInput = ({
 			} finally {
 				setIsFetching(false);
 			}
-		}, 300);
-	};
+		}, debounceMs);
+	}
 
 	useEffect(() => {
 		return () => timeoutRef.current && clearTimeout(timeoutRef.current);
@@ -74,18 +98,37 @@ export const SearchSelectInput = ({
 				disabled={disabled}
 				suffixIcon={isFetching ? <Spin /> : suffixIcon}
 				value={value}
-				showSearch={showSearch}
-				mode={mode}
-				maxTagCount={mode === 'multiple' ? 1 : null}
+				showSearch={resolvedShowSearch}
+				mode={normalizedMode}
+				maxTagCount={normalizedMode === 'multiple' ? 1 : undefined}
 				className={inputClassName}
 				placeholder={placeholder}
-				optionFilterProp='label'
 				onChange={handleKeyValueChange}
 				onDeselect={onDeselect}
-				onSearch={handleSearch}
-				onFocus={() => handleSearch('')}
+				onFocus={() => shouldEnableSearch && handleSearch('')}
 				options={fetchedData}
 			/>
 		</div>
 	);
-}
+};
+
+SearchSelectInput.propTypes = {
+	label: PropTypes.node,
+	value: PropTypes.any,
+	suffixIcon: PropTypes.node,
+	inputName: PropTypes.string,
+	placeholder: PropTypes.string,
+	inputClassName: PropTypes.string,
+	onChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	disabled: PropTypes.bool,
+	mode: PropTypes.oneOf(['default', 'multiple', 'tags']),
+	showSearch: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+	onDeselect: PropTypes.func,
+	fetchFunc: PropTypes.func,
+	extractResults: PropTypes.func,
+	transformResults: PropTypes.func,
+	debounceMs: PropTypes.number,
+	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	gap: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};

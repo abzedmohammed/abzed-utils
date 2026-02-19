@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DatePicker, Form } from "antd";
+import PropTypes from "prop-types";
 
 export const FormInputDatePicker = ({
     label,
@@ -13,7 +14,8 @@ export const FormInputDatePicker = ({
     format = "DD/MM/YYYY",
     suffixIcon,
     maxDate,
-    minDate
+    minDate,
+    extraRules = [],
 }) => {
     const [open, setOpen] = useState(false);
 
@@ -39,6 +41,7 @@ export const FormInputDatePicker = ({
                     required: required,
                     message: "Field is required",
                 },
+                ...extraRules,
             ]}
         >
             <DatePicker
@@ -64,4 +67,20 @@ export const FormInputDatePicker = ({
             />
         </Form.Item>
     );
-}
+};
+
+FormInputDatePicker.propTypes = {
+    label: PropTypes.node,
+    inputName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    placeholder: PropTypes.string,
+    className: PropTypes.string,
+    inputClassName: PropTypes.string,
+    required: PropTypes.bool,
+    readOnly: PropTypes.bool,
+    picker: PropTypes.oneOf(["date", "week", "month", "quarter", "year", "time"]),
+    format: PropTypes.string,
+    suffixIcon: PropTypes.node,
+    maxDate: PropTypes.object,
+    minDate: PropTypes.object,
+    extraRules: PropTypes.arrayOf(PropTypes.object),
+};

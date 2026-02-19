@@ -1,4 +1,5 @@
 import { Form, InputNumber } from "antd";
+import PropTypes from "prop-types";
 
 export const FormInputNumber = ({
     label,
@@ -42,4 +43,21 @@ export const FormInputNumber = ({
             />
         </Form.Item>
     );
+};
+
+FormInputNumber.propTypes = {
+    label: PropTypes.node,
+    inputName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    placeholder: PropTypes.string,
+    className: PropTypes.string,
+    inputClassName: PropTypes.string,
+    required: PropTypes.bool,
+    readOnly: PropTypes.bool,
+    prefix: PropTypes.node,
+    suffix: PropTypes.node,
+    formatter: PropTypes.func,
+    parser: PropTypes.func,
+    extraRules: PropTypes.arrayOf(PropTypes.object),
+    min: PropTypes.number,
+    max: PropTypes.number,
 };

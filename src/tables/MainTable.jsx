@@ -1,4 +1,5 @@
 import { Table } from 'antd';
+import PropTypes from 'prop-types';
 
 export const MainTable = ({
 	rowKey,
@@ -31,4 +32,15 @@ export const MainTable = ({
 			/>
 		</div>
 	);
+};
+
+MainTable.propTypes = {
+	rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+	className: PropTypes.string,
+	scroll: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string, PropTypes.object]),
+	columns: PropTypes.arrayOf(PropTypes.object),
+	dataSource: PropTypes.arrayOf(PropTypes.object),
+	loading: PropTypes.bool,
+	pagination: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+	rowSelection: PropTypes.object,
 };

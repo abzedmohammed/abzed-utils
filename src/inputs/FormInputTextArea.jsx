@@ -1,4 +1,5 @@
 import { Form } from "antd";
+import PropTypes from "prop-types";
 import TextArea from "antd/es/input/TextArea";
 
 export const FormInputTextArea = ({
@@ -37,4 +38,18 @@ export const FormInputTextArea = ({
             />
         </Form.Item>
     );
-}
+};
+
+FormInputTextArea.propTypes = {
+    label: PropTypes.node,
+    inputName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    placeholder: PropTypes.string,
+    className: PropTypes.string,
+    inputClassName: PropTypes.string,
+    required: PropTypes.bool,
+    rows: PropTypes.number,
+    readOnly: PropTypes.bool,
+    disabled: PropTypes.bool,
+    extraRules: PropTypes.arrayOf(PropTypes.object),
+    cols: PropTypes.number,
+};

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import PropTypes from 'prop-types';
 
 export const TextDynamic = ({
     className,
@@ -11,4 +12,11 @@ export const TextDynamic = ({
             {text}
         </Tag>
     );
+};
+
+TextDynamic.propTypes = {
+    className: PropTypes.string,
+    tagName: PropTypes.elementType,
+    text: PropTypes.node,
+    color: PropTypes.string,
 };

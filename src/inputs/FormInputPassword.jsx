@@ -1,4 +1,5 @@
 import { Form, Input } from "antd";
+import PropTypes from "prop-types";
 
 export const FormInputPassword = ({
     label,
@@ -42,4 +43,20 @@ export const FormInputPassword = ({
             />
         </Form.Item>
     );
-}
+};
+
+FormInputPassword.propTypes = {
+    label: PropTypes.node,
+    inputName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    placeholder: PropTypes.string,
+    required: PropTypes.bool,
+    className: PropTypes.string,
+    inputClassName: PropTypes.string,
+    readOnly: PropTypes.bool,
+    prefix: PropTypes.node,
+    suffix: PropTypes.node,
+    iconRenderShow: PropTypes.node,
+    iconRenderHide: PropTypes.node,
+    showIconRender: PropTypes.bool,
+    extraRules: PropTypes.arrayOf(PropTypes.object),
+};

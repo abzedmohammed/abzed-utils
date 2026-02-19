@@ -1,4 +1,5 @@
 import { Checkbox, Form } from "antd";
+import PropTypes from "prop-types";
 
 export const FormInputCheckbox = ({
     label,
@@ -27,4 +28,14 @@ export const FormInputCheckbox = ({
             </Checkbox>
         </Form.Item>
     );
-}
+};
+
+FormInputCheckbox.propTypes = {
+    label: PropTypes.node,
+    inputName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    className: PropTypes.string,
+    checkboxClass: PropTypes.string,
+    required: PropTypes.bool,
+    disabled: PropTypes.bool,
+    extraRules: PropTypes.arrayOf(PropTypes.object),
+};

@@ -1,4 +1,5 @@
 import { Form } from 'antd';
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 
 export const AntdForm = ({
@@ -9,10 +10,10 @@ export const AntdForm = ({
 	initialValues = {},
 	disabled,
 }) => {
-	const onFinish = async (data) => handleSubmit(data, form);
+	const onFinish = async (data) => handleSubmit?.(data, form);
 
 	useEffect(() => {
-		form.setFieldsValue(initialValues);
+		form?.setFieldsValue?.(initialValues);
 	}, [form, initialValues]);
 
 	return (
@@ -31,4 +32,13 @@ export const AntdForm = ({
 			{children}
 		</Form>
 	);
+};
+
+AntdForm.propTypes = {
+	handleSubmit: PropTypes.func,
+	children: PropTypes.node,
+	formName: PropTypes.string,
+	form: PropTypes.object,
+	initialValues: PropTypes.object,
+	disabled: PropTypes.bool,
 };

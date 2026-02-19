@@ -1,17 +1,20 @@
 import { Input } from "antd";
+import PropTypes from "prop-types";
 
 export const OTPInput = ({
     setotp,
+    onChange,
     length = 4,
     className = "flex items-center justify-center",
     otpClassName,
 }) => {
-    const onChange = (text) => {
-        setotp(text);
+    const handleChange = (text) => {
+        onChange?.(text);
+        setotp?.(text);
     };
 
     const sharedProps = {
-        onChange,
+        onChange: handleChange,
     };
 
     return (
@@ -26,4 +29,12 @@ export const OTPInput = ({
             </div>
         </>
     );
+};
+
+OTPInput.propTypes = {
+    setotp: PropTypes.func,
+    onChange: PropTypes.func,
+    length: PropTypes.number,
+    className: PropTypes.string,
+    otpClassName: PropTypes.string,
 };

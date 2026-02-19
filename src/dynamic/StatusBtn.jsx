@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const StatusBtn = ({ status = {} }) => {
 	const { statusName, color, className } = status;
 
@@ -10,6 +12,14 @@ const StatusBtn = ({ status = {} }) => {
 			{statusName}
 		</span>
 	);
+};
+
+StatusBtn.propTypes = {
+	status: PropTypes.shape({
+		statusName: PropTypes.node,
+		color: PropTypes.string,
+		className: PropTypes.string,
+	}),
 };
 
 export { StatusBtn };

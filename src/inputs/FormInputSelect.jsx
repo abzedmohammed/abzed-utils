@@ -1,4 +1,5 @@
 import { Form, Select, Spin } from 'antd';
+import PropTypes from 'prop-types';
 
 export const FormInputSelect = ({
 	label,
@@ -10,6 +11,7 @@ export const FormInputSelect = ({
 	loading = false,
 	disabled = false,
 	onChange= null,
+	onValueChange,
 	suffixIcon,
 	placeholder,
 	showSearch,
@@ -17,6 +19,30 @@ export const FormInputSelect = ({
 	maxTagCount = 1,
 	extraRules = [],
 }) => {
+	const normalizedMode = mode === 'default' ? undefined : mode;
+	const isModeSearchEnabled =
+		normalizedMode === 'multiple' || normalizedMode === 'tags';
+	const hasObjectShowSearch =
+		showSearch &&
+		typeof showSearch === 'object' &&
+		!Array.isArray(showSearch);
+	const shouldEnableSearch =
+		typeof showSearch === 'boolean'
+			? showSearch
+			: hasObjectShowSearch
+				? true
+				: isModeSearchEnabled;
+	const resolvedShowSearch = shouldEnableSearch
+		? {
+				filterOption: (input, option) =>
+					(option?.label?.toLocaleLowerCase() ?? '').includes(
+						input?.toLocaleLowerCase?.() ?? ''
+					),
+				...(hasObjectShowSearch ? showSearch : {}),
+		  }
+		: false;
+	const resolvedOnChange = onValueChange ?? onChange;
+
 	return (
 		<Form.Item
 			rules={[
@@ -31,25 +57,40 @@ export const FormInputSelect = ({
 			label={label}>
 			<Select
 				placeholder={placeholder}
-				mode={mode}
+				mode={normalizedMode}
 				maxTagCount={maxTagCount}
-				onChange={onChange}
-				showSearch={showSearch}
+				onChange={resolvedOnChange}
+				showSearch={resolvedShowSearch}
 				className={inputClassName}
 				disabled={disabled || loading}
 				options={options}
 				suffixIcon={loading ? <Spin /> : suffixIcon}
-				filterOption={(input, option) =>
-					(option?.label?.toLocaleLowerCase() ?? '').includes(
-						input?.toLocaleLowerCase()
-					)
-				}
-				// filterSort={(optionA, optionB) =>
-				// 	(optionA?.label ?? '')
-				// 		.toLowerCase()
-				// 		.localeCompare((optionB?.label ?? '').toLowerCase())
-				// }
 			/>
 		</Form.Item>
 	);
-}
+};
+
+FormInputSelect.propTypes = {
+	label: PropTypes.node,
+	inputName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	className: PropTypes.string,
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.node,
+			value: PropTypes.any,
+			disabled: PropTypes.bool,
+		})
+	),
+	inputClassName: PropTypes.string,
+	required: PropTypes.bool,
+	loading: PropTypes.bool,
+	disabled: PropTypes.bool,
+	onChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	suffixIcon: PropTypes.node,
+	placeholder: PropTypes.string,
+	showSearch: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+	mode: PropTypes.oneOf([null, 'default', 'multiple', 'tags']),
+	maxTagCount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	extraRules: PropTypes.arrayOf(PropTypes.object),
+};

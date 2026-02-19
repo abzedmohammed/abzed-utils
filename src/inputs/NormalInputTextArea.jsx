@@ -1,4 +1,5 @@
 import TextArea from 'antd/es/input/TextArea';
+import PropTypes from 'prop-types';
 import { defaultInputStyle } from '../utils';
 
 export const NormalInputTextArea = ({
@@ -9,6 +10,7 @@ export const NormalInputTextArea = ({
 	placeholder,
 	inputClassName,
 	onChange,
+	onValueChange,
 	onBlur = null,
 	readOnly,
 	width = '100%',
@@ -17,13 +19,15 @@ export const NormalInputTextArea = ({
 	cols,
 	disabled = false,
 }) => {
+	const resolvedOnChange = onValueChange ?? onChange;
+
 	return (
 		<div style={defaultInputStyle({ width, gap })}>
-			<label>{label}</label>
+			{label && <label>{label}</label>}
 			<TextArea
 				readOnly={readOnly}
 				value={value}
-				onChange={e => onChange(e.target.value, inputName, recordKey)}
+				onChange={e => resolvedOnChange?.(e.target.value, inputName, recordKey)}
 				className={inputClassName}
 				placeholder={placeholder}
 				onBlur={onBlur}
@@ -33,4 +37,22 @@ export const NormalInputTextArea = ({
 			/>
 		</div>
 	);
-}
+};
+
+NormalInputTextArea.propTypes = {
+	label: PropTypes.node,
+	value: PropTypes.string,
+	inputName: PropTypes.string,
+	recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	placeholder: PropTypes.string,
+	inputClassName: PropTypes.string,
+	onChange: PropTypes.func,
+	onValueChange: PropTypes.func,
+	onBlur: PropTypes.func,
+	readOnly: PropTypes.bool,
+	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	gap: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	rows: PropTypes.number,
+	cols: PropTypes.number,
+	disabled: PropTypes.bool,
+};

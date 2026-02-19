@@ -1,4 +1,5 @@
 import { Form } from "antd";
+import PropTypes from "prop-types";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
@@ -38,4 +39,17 @@ export const FormInputPhone = ({
             />
         </Form.Item>
     );
+};
+
+FormInputPhone.propTypes = {
+    flags: PropTypes.object,
+    label: PropTypes.node,
+    inputName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    className: PropTypes.string,
+    required: PropTypes.bool,
+    inputClassName: PropTypes.string,
+    defaultCountry: PropTypes.string,
+    readOnly: PropTypes.bool,
+    placeholder: PropTypes.string,
+    extraRules: PropTypes.arrayOf(PropTypes.object),
 };

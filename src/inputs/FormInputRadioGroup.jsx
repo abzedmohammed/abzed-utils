@@ -1,4 +1,5 @@
 import { Form, Radio } from "antd";
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
 export const FormInputRadioGroup = ({
@@ -8,6 +9,7 @@ export const FormInputRadioGroup = ({
     radioValue,
     options=[],
     onRadioChange = null,
+    onValueChange,
     required = true,
     inputClassName,
     disabled,
@@ -15,10 +17,12 @@ export const FormInputRadioGroup = ({
 }) => {
     const [value, setvalue] = useState(radioValue);
 
-    const onChange = (e) => {
+    const resolvedOnChange = onValueChange ?? onRadioChange;
+
+    const handleChange = (e) => {
         setvalue(e.target.value);
-        if (onRadioChange !== null) {
-            onRadioChange(e.target.value);
+        if (resolvedOnChange !== null) {
+            resolvedOnChange(e.target.value);
         }
     };
 
@@ -42,10 +46,30 @@ export const FormInputRadioGroup = ({
             <Radio.Group
                 disabled={disabled}
                 className={inputClassName}
-                onChange={onChange}
+                onChange={handleChange}
                 value={value}
                 options={options}
             />
         </Form.Item>
     );
-}
+};
+
+FormInputRadioGroup.propTypes = {
+    label: PropTypes.node,
+    inputName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    className: PropTypes.string,
+    radioValue: PropTypes.any,
+    options: PropTypes.arrayOf(
+        PropTypes.shape({
+            label: PropTypes.node,
+            value: PropTypes.any,
+            disabled: PropTypes.bool,
+        })
+    ),
+    onRadioChange: PropTypes.func,
+    onValueChange: PropTypes.func,
+    required: PropTypes.bool,
+    inputClassName: PropTypes.string,
+    disabled: PropTypes.bool,
+    extraRules: PropTypes.arrayOf(PropTypes.object),
+};

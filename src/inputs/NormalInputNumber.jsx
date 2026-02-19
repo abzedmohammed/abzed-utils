@@ -1,4 +1,5 @@
 import { InputNumber } from "antd";
+import PropTypes from "prop-types";
 import { defaultInputStyle } from "../utils";
 
 export const NormalInputNumber = ({
@@ -9,6 +10,7 @@ export const NormalInputNumber = ({
     placeholder,
     inputClassName,
     onChange,
+    onValueChange,
     onBlur = null,
     readOnly,
     prefix = null,
@@ -20,9 +22,11 @@ export const NormalInputNumber = ({
     max,
     disabled = false,
 }) => {
+    const resolvedOnChange = onValueChange ?? onChange;
+
     return (
         <div style={defaultInputStyle({ width, gap })}>
-            <label>{label}</label>
+            {label && <label>{label}</label>}
             <InputNumber
                 min={min}
                 max={max}
@@ -31,7 +35,7 @@ export const NormalInputNumber = ({
                 prefix={prefix}
                 readOnly={readOnly}
                 value={value}
-                onChange={(val) => onChange(val, inputName, recordKey)}
+                onChange={(val) => resolvedOnChange?.(val, inputName, recordKey)}
                 className={inputClassName}
                 placeholder={placeholder}
                 onBlur={onBlur}
@@ -39,4 +43,25 @@ export const NormalInputNumber = ({
             />
         </div>
     );
+};
+
+NormalInputNumber.propTypes = {
+    label: PropTypes.node,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    inputName: PropTypes.string,
+    recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    placeholder: PropTypes.string,
+    inputClassName: PropTypes.string,
+    onChange: PropTypes.func,
+    onValueChange: PropTypes.func,
+    onBlur: PropTypes.func,
+    readOnly: PropTypes.bool,
+    prefix: PropTypes.node,
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    gap: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    formatter: PropTypes.func,
+    parser: PropTypes.func,
+    min: PropTypes.number,
+    max: PropTypes.number,
+    disabled: PropTypes.bool,
 };
