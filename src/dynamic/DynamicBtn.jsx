@@ -10,7 +10,7 @@ export const DynamicBtn = ({
 	text,
 	children,
 	icon = null,
-	iconPosition='start',
+	iconPlacement='start',
 	type = 'button',
 	className,
 	width,
@@ -23,7 +23,7 @@ export const DynamicBtn = ({
 		<Button
 			size='large'
 			icon={icon}
-			iconPosition={iconPosition}
+			iconPlacement={iconPlacement}
 			loading={resolvedLoading}
 			style={{
 				width: width ? width : 'fit-content',
@@ -47,7 +47,7 @@ DynamicBtn.propTypes = {
 	text: PropTypes.node,
 	children: PropTypes.node,
 	icon: PropTypes.node,
-	iconPosition: PropTypes.oneOf(['start', 'end']),
+	iconPlacement: PropTypes.oneOf(['start', 'end']),
 	type: PropTypes.oneOf(['button', 'submit', 'reset']),
 	className: PropTypes.string,
 	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
