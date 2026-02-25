@@ -3,7 +3,7 @@ export const onSuccess = (message, notifyFn) => {
     if (notifyFn) {
         notifyFn({ id: 1, message });
     } else {
-        console.log("✅", message);
+        console.warn("✅", message);
     }
 };
 

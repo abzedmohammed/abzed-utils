@@ -35,6 +35,17 @@ console.log(formatMoney(1234.56, "KES"));
 
 `abzed-utils` now includes runtime prop validation with `prop-types` across exported UI wrappers, helping catch incorrect prop usage early during development.
 
+## Quality Commands
+
+- `npm run test`: Run unit tests with Vitest
+- `npm run test:watch`: Run tests in watch mode
+- `npm run build`: Build distributable package
+- `npm run check`: Run tests then build
+
+## Compatibility
+
+See `docs/COMPATIBILITY.md` for the host app dependency matrix.
+
 ## Exported Modules
 
 `abzed-utils` exports:
