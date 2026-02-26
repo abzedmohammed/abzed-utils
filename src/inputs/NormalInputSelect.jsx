@@ -10,7 +10,6 @@ export const NormalInputSelect = ({
 	recordKey,
 	placeholder,
 	inputClassName,
-	onChange,
 	onValueChange,
 	disabled,
 	loading,
@@ -44,7 +43,6 @@ export const NormalInputSelect = ({
 				...(hasObjectShowSearch ? showSearch : {}),
 		  }
 		: false;
-	const resolvedOnChange = onValueChange ?? onChange;
 
 	return (
 		<div style={defaultInputStyle({ width, gap })}>
@@ -54,7 +52,7 @@ export const NormalInputSelect = ({
 				mode={normalizedMode}
 				showSearch={resolvedShowSearch}
 				maxTagCount={maxTagCount}
-				onChange={(val) => resolvedOnChange?.(val, inputName, recordKey)}
+				onChange={(val) => onValueChange?.(val, inputName, recordKey)}
 				className={inputClassName}
 				placeholder={placeholder}
 				onBlur={onBlur}
@@ -74,7 +72,6 @@ NormalInputSelect.propTypes = {
 	recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	placeholder: PropTypes.string,
 	inputClassName: PropTypes.string,
-	onChange: PropTypes.func,
 	onValueChange: PropTypes.func,
 	disabled: PropTypes.bool,
 	loading: PropTypes.bool,

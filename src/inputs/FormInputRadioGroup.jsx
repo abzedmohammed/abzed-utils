@@ -7,27 +7,22 @@ export const FormInputRadioGroup = ({
     inputName,
     className,
     radioValue,
-    options=[],
-    onRadioChange = null,
+    options = [],
     onValueChange,
     required = true,
     inputClassName,
     disabled,
     extraRules = [],
 }) => {
-    const [value, setvalue] = useState(radioValue);
-
-    const resolvedOnChange = onValueChange ?? onRadioChange;
+    const [value, setValue] = useState(radioValue);
 
     const handleChange = (e) => {
-        setvalue(e.target.value);
-        if (resolvedOnChange !== null) {
-            resolvedOnChange(e.target.value);
-        }
+        setValue(e.target.value);
+        onValueChange?.(e.target.value);
     };
 
     useEffect(() => {
-        setvalue(radioValue);
+        setValue(radioValue);
     }, [radioValue]);
 
     return (
@@ -66,7 +61,6 @@ FormInputRadioGroup.propTypes = {
             disabled: PropTypes.bool,
         })
     ),
-    onRadioChange: PropTypes.func,
     onValueChange: PropTypes.func,
     required: PropTypes.bool,
     inputClassName: PropTypes.string,

@@ -203,19 +203,20 @@ onError(message, variables, context, { variables, context, response, error })
 | `SearchSelectInput` | Async searchable select with pluggable fetch/transform logic. |
 | `MainSearch` | Simple reusable search input wrapper. |
 
-## API Consistency And Compatibility Aliases
+## Standardized Event Props
 
-Preferred props are supported while legacy props still work to avoid breaking existing usage.
+Legacy alias props were removed so each component now uses one event API.
 
-| Component | Preferred | Legacy (still supported) |
-| --- | --- | --- |
-| `DynamicBtn` | `onClick`, `loading`, `children` | `handleClick`, `isProcessing`, `text` |
-| `DynamicDrawer` | `onClose`, `title`, `children`, `size` | `handleClose`, `drawerTitle`, `drawerBody`, `width` |
-| `PrimaryModal` | `onClose`, `header`, `children` | `handleCancel`, `modalHeader`, `body` |
-| `ActionModal` | `onClose`, `icon`, `header`, `actions` | `handleCloseModal`, `iconComponent`, `headerComponent`, `buttonComponent` |
-| `DynamicFileInput` | `onFileChange`, `onUploadSuccess`, `onUploadError`, `children` | `handleFileChange`, `onSuccess`, `onError`, `dynamicBody` |
-| `MainSearch` | `onSearchChange` | `handleSearchChange` |
-| Normal/Form input wrappers | `onValueChange` | `onChange` |
+| Component | Standardized props |
+| --- | --- |
+| `DynamicBtn` | `onClick`, `loading`, `children` |
+| `DynamicDrawer` | `onClose`, `title`, `children`, `size` |
+| `PrimaryModal` | `onClose`, `header`, `children` |
+| `ActionModal` | `onClose`, `icon`, `header`, `actions` |
+| `DynamicFileInput` | `onFileChange`, `onUploadSuccess`, `onUploadError`, `children` |
+| `PrimaryDropdown` | `onOpenChange`, `children` |
+| `MainSearch` | `onSearchChange` |
+| Normal/Form input wrappers | `onValueChange` |
 
 ### Select Wrapper Notes
 
@@ -236,12 +237,12 @@ Preferred props are supported while legacy props still work to avoid breaking ex
 | dropdown | `PrimaryDropdown` | Dropdown wrapper aligned to AntD `classNames/styles` with legacy overlay compatibility. |
 | tables | `MainTable` | Responsive AntD table wrapper with optional scroll and row selection. |
 | loaders | `CardSkeleton` | Skeleton block component. |
-| modals | `PrimaryModal` | Base modal wrapper with standardized close/header/body aliases. |
-| modals | `ActionModal` | Action-focused modal built on `PrimaryModal` with alias-safe props. |
+| modals | `PrimaryModal` | Base modal wrapper with `onClose`, `header`, and `children`. |
+| modals | `ActionModal` | Action-focused modal built on `PrimaryModal` with `onClose`, `icon`, `header`, and `actions`. |
 | dynamic | `TextDynamic` | Dynamic text/tag renderer. |
 | dynamic | `DynamicBtn` | Loading-capable button wrapper with standardized click/loading props. |
 | dynamic | `EmptyState` | Empty state wrapper (`<Empty />`). |
-| dynamic | `DynamicDrawer` | Drawer wrapper with customizable placement and size (`width` compatibility alias). |
+| dynamic | `DynamicDrawer` | Drawer wrapper with customizable placement and size. |
 | dynamic | `StatusBtn`, `Statusbtn` | Status text renderer (legacy and canonical names exported). |
 | dynamic | `DynamicFileInput` | Upload UI wrapper with custom upload flow support. |
 
@@ -261,7 +262,7 @@ Preferred props are supported while legacy props still work to avoid breaking ex
 - `usePrefersDarkMode` is now exported through root hooks exports.
 - Deprecated AntD wrapper props were removed/migrated to current AntD API.
 - Runtime `PropTypes` contracts were added across UI wrappers.
-- Wrapper APIs were standardized with compatibility aliases (`onClose`, `onClick`, `loading`, `onValueChange`).
+- Wrapper APIs are standardized to single handler props (`onClose`, `onClick`, `onOpenChange`, `onValueChange`).
 - Select wrappers now use modern search config patterns and normalized mode handling.
 
 ## Build

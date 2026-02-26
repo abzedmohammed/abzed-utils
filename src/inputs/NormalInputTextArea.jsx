@@ -9,7 +9,6 @@ export const NormalInputTextArea = ({
 	recordKey,
 	placeholder,
 	inputClassName,
-	onChange,
 	onValueChange,
 	onBlur = null,
 	readOnly,
@@ -19,15 +18,13 @@ export const NormalInputTextArea = ({
 	cols,
 	disabled = false,
 }) => {
-	const resolvedOnChange = onValueChange ?? onChange;
-
 	return (
 		<div style={defaultInputStyle({ width, gap })}>
 			{label && <label>{label}</label>}
 			<TextArea
 				readOnly={readOnly}
 				value={value}
-				onChange={e => resolvedOnChange?.(e.target.value, inputName, recordKey)}
+				onChange={e => onValueChange?.(e.target.value, inputName, recordKey)}
 				className={inputClassName}
 				placeholder={placeholder}
 				onBlur={onBlur}
@@ -46,7 +43,6 @@ NormalInputTextArea.propTypes = {
 	recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	placeholder: PropTypes.string,
 	inputClassName: PropTypes.string,
-	onChange: PropTypes.func,
 	onValueChange: PropTypes.func,
 	onBlur: PropTypes.func,
 	readOnly: PropTypes.bool,

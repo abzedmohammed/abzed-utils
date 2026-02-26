@@ -9,7 +9,6 @@ export const NormalInput = ({
     recordKey,
     placeholder,
     inputClassName,
-    onChange,
     onValueChange,
     readOnly,
     onBlur = null,
@@ -18,8 +17,6 @@ export const NormalInput = ({
     gap = ".5rem",
     disabled = false,
 }) => {
-    const resolvedOnChange = onValueChange ?? onChange;
-
     return (
         <div style={defaultInputStyle({ width, gap })}>
             {label && <label>{label}</label>}
@@ -27,7 +24,7 @@ export const NormalInput = ({
                 prefix={prefix}
                 readOnly={readOnly}
                 value={value}
-                onChange={(e) => resolvedOnChange?.(e.target.value, inputName, recordKey)}
+                onChange={(e) => onValueChange?.(e.target.value, inputName, recordKey)}
                 className={inputClassName}
                 placeholder={placeholder}
                 onBlur={onBlur}
@@ -44,7 +41,6 @@ NormalInput.propTypes = {
     recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     placeholder: PropTypes.string,
     inputClassName: PropTypes.string,
-    onChange: PropTypes.func,
     onValueChange: PropTypes.func,
     readOnly: PropTypes.bool,
     onBlur: PropTypes.func,

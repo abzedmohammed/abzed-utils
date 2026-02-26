@@ -5,7 +5,6 @@ import { defaultDropdownOverlayStyle } from "../utils";
 
 const PrimaryDropdown = forwardRef(({
 	items = [],
-	triggerButton,
 	children,
 	overlayStyle = defaultDropdownOverlayStyle,
 	placement = 'bottom',
@@ -16,11 +15,8 @@ const PrimaryDropdown = forwardRef(({
     styles,
     disabled,
     onOpenChange,
-    onToggle,
 }, ref) => {
     const normalizedTrigger = Array.isArray(trigger) ? trigger : [trigger];
-    const resolvedTriggerButton = children ?? triggerButton;
-    const resolvedOnOpenChange = onOpenChange ?? onToggle;
     const overlayClassNameIsString = typeof overlayClassName === 'string';
     const resolvedOverlayClassName = overlayClassNameIsString
         ? overlayClassName
@@ -48,7 +44,7 @@ const PrimaryDropdown = forwardRef(({
         <Dropdown
 			ref={ref}
 			disabled={disabled}
-			onOpenChange={resolvedOnOpenChange}
+			onOpenChange={onOpenChange}
 			className={className}
 			trigger={normalizedTrigger}
 			placement={placement}
@@ -57,7 +53,7 @@ const PrimaryDropdown = forwardRef(({
             styles={resolvedStyles}
 		>
             <div onClick={(e) => e.preventDefault()}>
-                <Space>{resolvedTriggerButton}</Space>
+                <Space>{children}</Space>
             </div>
 		</Dropdown>
 	);
@@ -73,7 +69,6 @@ PrimaryDropdown.propTypes = {
 			disabled: PropTypes.bool,
 		})
 	),
-	triggerButton: PropTypes.node,
 	children: PropTypes.node,
 	overlayStyle: PropTypes.object,
 	placement: PropTypes.oneOf([
@@ -94,7 +89,6 @@ PrimaryDropdown.propTypes = {
 	styles: PropTypes.object,
 	disabled: PropTypes.bool,
 	onOpenChange: PropTypes.func,
-	onToggle: PropTypes.func,
 };
 
 export default PrimaryDropdown;

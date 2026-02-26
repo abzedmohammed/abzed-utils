@@ -7,7 +7,6 @@ export const NormalInputTimePicker = ({
     value,
 	inputName,
 	recordKey,
-    onChange,
 	onValueChange,
 	placeholder,
 	inputClassName,
@@ -19,8 +18,6 @@ export const NormalInputTimePicker = ({
 	gap = '.5rem',
 	disabled = false,
 }) => {
-	const resolvedOnChange = onValueChange ?? onChange;
-
 	return (
 		<div style={defaultInputStyle({ width, gap })}>
 			{label && <label>{label}</label>}
@@ -30,7 +27,7 @@ export const NormalInputTimePicker = ({
 				readOnly={readOnly}
 				value={value}
 				onChange={(val) =>
-					resolvedOnChange?.(
+					onValueChange?.(
 						val ? val.format(format) : null,
 						inputName,
 						recordKey
@@ -50,7 +47,6 @@ NormalInputTimePicker.propTypes = {
 	value: PropTypes.object,
 	inputName: PropTypes.string,
 	recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	onChange: PropTypes.func,
 	onValueChange: PropTypes.func,
 	placeholder: PropTypes.string,
 	inputClassName: PropTypes.string,

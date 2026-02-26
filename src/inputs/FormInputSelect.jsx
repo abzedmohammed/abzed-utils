@@ -10,7 +10,6 @@ export const FormInputSelect = ({
 	required = true,
 	loading = false,
 	disabled = false,
-	onChange= null,
 	onValueChange,
 	suffixIcon,
 	placeholder,
@@ -41,7 +40,6 @@ export const FormInputSelect = ({
 				...(hasObjectShowSearch ? showSearch : {}),
 		  }
 		: false;
-	const resolvedOnChange = onValueChange ?? onChange;
 
 	return (
 		<Form.Item
@@ -59,7 +57,7 @@ export const FormInputSelect = ({
 				placeholder={placeholder}
 				mode={normalizedMode}
 				maxTagCount={maxTagCount}
-				onChange={resolvedOnChange}
+				onChange={onValueChange}
 				showSearch={resolvedShowSearch}
 				className={inputClassName}
 				disabled={disabled || loading}
@@ -85,7 +83,6 @@ FormInputSelect.propTypes = {
 	required: PropTypes.bool,
 	loading: PropTypes.bool,
 	disabled: PropTypes.bool,
-	onChange: PropTypes.func,
 	onValueChange: PropTypes.func,
 	suffixIcon: PropTypes.node,
 	placeholder: PropTypes.string,

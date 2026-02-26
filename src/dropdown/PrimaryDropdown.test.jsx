@@ -6,8 +6,9 @@ describe("PrimaryDropdown", () => {
         render(
             <PrimaryDropdown
                 items={[{ key: "1", label: "Profile" }]}
-                triggerButton={<button type="button">Open Menu</button>}
-            />,
+            >
+                <button type="button">Open Menu</button>
+            </PrimaryDropdown>,
         );
 
         expect(screen.getByRole("button", { name: "Open Menu" })).toBeTruthy();

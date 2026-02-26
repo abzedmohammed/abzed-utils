@@ -10,7 +10,6 @@ export const SearchSelectInput = ({
 	inputName,
 	placeholder,
 	inputClassName,
-	onChange,
 	onValueChange,
 	disabled,
 	mode = 'default',
@@ -48,10 +47,9 @@ export const SearchSelectInput = ({
 				...(hasObjectShowSearch ? showSearch : {}),
 		  }
 		: false;
-	const resolvedOnChange = onValueChange ?? onChange;
 
 	const handleKeyValueChange = (val, option) => {
-		resolvedOnChange?.({
+		onValueChange?.({
 			value: val,
 			inputName,
 			label: option?.label,
@@ -119,7 +117,6 @@ SearchSelectInput.propTypes = {
 	inputName: PropTypes.string,
 	placeholder: PropTypes.string,
 	inputClassName: PropTypes.string,
-	onChange: PropTypes.func,
 	onValueChange: PropTypes.func,
 	disabled: PropTypes.bool,
 	mode: PropTypes.oneOf(['default', 'multiple', 'tags']),

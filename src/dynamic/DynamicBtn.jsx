@@ -2,49 +2,42 @@ import { Button } from 'antd';
 import PropTypes from 'prop-types';
 
 export const DynamicBtn = ({
-	handleClick,
 	onClick,
 	disabled,
-	isProcessing,
-	loading,
-	text,
+	loading = false,
 	children,
 	icon = null,
-	iconPlacement='start',
+	iconPlacement = 'start',
 	type = 'button',
 	className,
 	width,
 	...buttonProps
 }) => {
-	const resolvedLoading = Boolean(loading ?? isProcessing);
-	const resolvedOnClick = onClick ?? handleClick;
+	const isLoading = Boolean(loading);
 
 	return (
 		<Button
 			size='large'
 			icon={icon}
 			iconPlacement={iconPlacement}
-			loading={resolvedLoading}
+			loading={isLoading}
 			style={{
 				width: width ? width : 'fit-content',
 			}}
-			onClick={resolvedOnClick}
-			disabled={disabled || resolvedLoading}
+			onClick={onClick}
+			disabled={disabled || isLoading}
 			className={className}
 			htmlType={type}
 			{...buttonProps}>
-			{text ?? children}
+			{children}
 		</Button>
 	);
 };
 
 DynamicBtn.propTypes = {
-	handleClick: PropTypes.func,
 	onClick: PropTypes.func,
 	disabled: PropTypes.bool,
-	isProcessing: PropTypes.bool,
 	loading: PropTypes.bool,
-	text: PropTypes.node,
 	children: PropTypes.node,
 	icon: PropTypes.node,
 	iconPlacement: PropTypes.oneOf(['start', 'end']),

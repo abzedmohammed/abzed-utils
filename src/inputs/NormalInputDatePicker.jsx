@@ -6,7 +6,6 @@ import { defaultInputStyle } from "../utils";
 export const NormalInputDatePicker = ({
 	label,
 	value,
-	onChange,
 	onValueChange,
 	inputName,
 	recordKey,
@@ -24,7 +23,6 @@ export const NormalInputDatePicker = ({
 	disabled = false,
 }) => {
 	const [open, setOpen] = useState(false);
-	const resolvedOnChange = onValueChange ?? onChange;
 
 	const handleOpenChange = (status) => {
 		if (status) setOpen(true);
@@ -43,7 +41,7 @@ export const NormalInputDatePicker = ({
 			{label && <label>{label}</label>}
 			<DatePicker
 				value={value}
-				onChange={(e) => resolvedOnChange?.(e, inputName, recordKey)}
+				onChange={(e) => onValueChange?.(e, inputName, recordKey)}
 				open={isTimePicker ? open : undefined}
 				onOpenChange={handleOpenChange}
 				onOk={isTimePicker ? handleOk : undefined}
@@ -73,7 +71,6 @@ export const NormalInputDatePicker = ({
 NormalInputDatePicker.propTypes = {
 	label: PropTypes.node,
 	value: PropTypes.object,
-	onChange: PropTypes.func,
 	onValueChange: PropTypes.func,
 	inputName: PropTypes.string,
 	recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

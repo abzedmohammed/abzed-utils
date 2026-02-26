@@ -7,7 +7,6 @@ export const NormalInputRadioGroup = ({
     value,
     inputName,
     recordKey,
-    onChange,
     onValueChange,
     options = [],
     disabled,
@@ -15,15 +14,13 @@ export const NormalInputRadioGroup = ({
     width = "100%",
     gap = ".5rem",
 }) => {
-    const resolvedOnChange = onValueChange ?? onChange;
-
     return (
         <div style={defaultInputStyle({ width, gap })}>
             {label && <label>{label}</label>}
             <Radio.Group
                 className={className}
                 disabled={disabled}
-                onChange={(e) => resolvedOnChange?.(e.target.value, inputName, recordKey)}
+                onChange={(e) => onValueChange?.(e.target.value, inputName, recordKey)}
                 value={value}
                 options={options}
             />
@@ -36,7 +33,6 @@ NormalInputRadioGroup.propTypes = {
     value: PropTypes.any,
     inputName: PropTypes.string,
     recordKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    onChange: PropTypes.func,
     onValueChange: PropTypes.func,
     options: PropTypes.arrayOf(
         PropTypes.shape({
