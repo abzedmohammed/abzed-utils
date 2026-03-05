@@ -209,7 +209,7 @@ Legacy alias props were removed so each component now uses one event API.
 
 | Component | Standardized props |
 | --- | --- |
-| `DynamicBtn` | `onClick`, `loading`, `children` |
+| `DynamicBtn` | `onClick`, `loading`, `text` |
 | `DynamicDrawer` | `onClose`, `title`, `children`, `size` |
 | `PrimaryModal` | `onClose`, `header`, `children` |
 | `ActionModal` | `onClose`, `icon`, `header`, `actions` |

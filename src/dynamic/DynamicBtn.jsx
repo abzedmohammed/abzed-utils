@@ -5,7 +5,7 @@ export const DynamicBtn = ({
 	onClick,
 	disabled,
 	loading = false,
-	children,
+	text,
 	icon = null,
 	iconPlacement = 'start',
 	type = 'button',
@@ -29,7 +29,7 @@ export const DynamicBtn = ({
 			className={className}
 			htmlType={type}
 			{...buttonProps}>
-			{children}
+			{text}
 		</Button>
 	);
 };
@@ -38,7 +38,7 @@ DynamicBtn.propTypes = {
 	onClick: PropTypes.func,
 	disabled: PropTypes.bool,
 	loading: PropTypes.bool,
-	children: PropTypes.node,
+	text: PropTypes.node,
 	icon: PropTypes.node,
 	iconPlacement: PropTypes.oneOf(['start', 'end']),
 	type: PropTypes.oneOf(['button', 'submit', 'reset']),

@@ -8,7 +8,7 @@ import { DynamicDrawer } from "./DynamicDrawer";
 describe("dynamic components", () => {
     it("renders DynamicBtn and handles click", () => {
         const onClick = vi.fn();
-        render(<DynamicBtn onClick={onClick}>Save</DynamicBtn>);
+        render(<DynamicBtn onClick={onClick} text="Save" />);
 
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
         expect(onClick).toHaveBeenCalled();
