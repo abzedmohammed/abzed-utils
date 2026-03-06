@@ -77,7 +77,7 @@ PrimaryDropdown.propTypes = {
 		'topRight',
 		'bottom',
 		'bottomLeft',
-		'bottomRight',
+		'bottomRight',PrimaryDropdown
 	]),
 	trigger: PropTypes.oneOfType([
 		PropTypes.arrayOf(PropTypes.oneOf(['click', 'hover', 'contextMenu'])),
