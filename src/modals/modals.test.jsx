@@ -5,9 +5,11 @@ import { ActionModal } from "./ActionModal";
 describe("modals", () => {
     it("renders PrimaryModal", () => {
         render(
-            <PrimaryModal open header={<div>Header</div>}>
-                <div>Body</div>
-            </PrimaryModal>,
+            <PrimaryModal
+                open
+                header={<div>Header</div>}
+                body={<div>Body</div>}
+            />,
         );
 
         expect(screen.getByText("Header")).toBeTruthy();

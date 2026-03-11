@@ -10,7 +10,7 @@ export const DynamicFileInput = ({
 	onFileChange,
 	label,
 	beforeUpload,
-	children,
+	body,
 	uploadFile,
 	onUploadSuccess,
 	onUploadError,
@@ -79,7 +79,7 @@ export const DynamicFileInput = ({
 							className={'txt_75 text-[#6B7280] animate-pulse'}
 						/>
 					) : (
-						children
+						body
 					)}
 				</Upload>
 			</div>
@@ -93,7 +93,7 @@ DynamicFileInput.propTypes = {
 	onFileChange: PropTypes.func,
 	label: PropTypes.node,
 	beforeUpload: PropTypes.func,
-	children: PropTypes.node,
+	body: PropTypes.node.isRequired,
 	uploadFile: PropTypes.func,
 	onUploadSuccess: PropTypes.func,
 	onUploadError: PropTypes.func,

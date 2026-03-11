@@ -30,9 +30,11 @@ describe("dynamic components", () => {
 
     it("renders DynamicDrawer content when open", () => {
         render(
-            <DynamicDrawer open title={<div>Drawer Title</div>}>
-                <div>Drawer Body</div>
-            </DynamicDrawer>,
+            <DynamicDrawer
+                open
+                title={<div>Drawer Title</div>}
+                drawerBody={<div>Drawer Body</div>}
+            />,
         );
 
         expect(screen.getByText("Drawer Title")).toBeTruthy();

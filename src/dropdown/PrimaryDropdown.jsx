@@ -5,7 +5,7 @@ import { defaultDropdownOverlayStyle } from "../utils";
 
 const PrimaryDropdown = forwardRef(({
 	items = [],
-	children,
+	triggerButton,
 	overlayStyle = defaultDropdownOverlayStyle,
 	placement = 'bottom',
     trigger = ['click'],
@@ -14,7 +14,7 @@ const PrimaryDropdown = forwardRef(({
     classNames,
     styles,
     disabled,
-    onOpenChange,
+	onOpenChange,
 }, ref) => {
     const normalizedTrigger = Array.isArray(trigger) ? trigger : [trigger];
     const overlayClassNameIsString = typeof overlayClassName === 'string';
@@ -53,7 +53,7 @@ const PrimaryDropdown = forwardRef(({
             styles={resolvedStyles}
 		>
             <div onClick={(e) => e.preventDefault()}>
-                <Space>{children}</Space>
+                <Space>{triggerButton}</Space>
             </div>
 		</Dropdown>
 	);
@@ -69,7 +69,7 @@ PrimaryDropdown.propTypes = {
 			disabled: PropTypes.bool,
 		})
 	),
-	children: PropTypes.node,
+	triggerButton: PropTypes.node.isRequired,
 	overlayStyle: PropTypes.object,
 	placement: PropTypes.oneOf([
 		'top',
@@ -77,7 +77,7 @@ PrimaryDropdown.propTypes = {
 		'topRight',
 		'bottom',
 		'bottomLeft',
-		'bottomRight',PrimaryDropdown
+		'bottomRight',
 	]),
 	trigger: PropTypes.oneOfType([
 		PropTypes.arrayOf(PropTypes.oneOf(['click', 'hover', 'contextMenu'])),

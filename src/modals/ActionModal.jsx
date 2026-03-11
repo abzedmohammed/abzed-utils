@@ -13,16 +13,17 @@ export const ActionModal = ({
     return (
         <PrimaryModal
             open={open}
-            onClose={onClose}
+            onCancel={onClose}
             hideHeader
             width={width}
-        >
-            <div className={mainClass}>
-                {icon}
-                {header}
-                {actions}
-            </div>
-        </PrimaryModal>
+            body={(
+                <div className={mainClass}>
+                    {icon}
+                    {header}
+                    {actions}
+                </div>
+            )}
+        />
     );
 };
 

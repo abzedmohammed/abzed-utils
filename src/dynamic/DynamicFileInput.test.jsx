@@ -8,9 +8,11 @@ vi.mock("react-redux", () => ({
 describe("DynamicFileInput", () => {
     it("renders upload trigger body", () => {
         render(
-            <DynamicFileInput label="File" uploadFile={() => ({ type: "UPLOAD" })}>
-                <span>Upload File</span>
-            </DynamicFileInput>,
+            <DynamicFileInput
+                label="File"
+                uploadFile={() => ({ type: "UPLOAD" })}
+                body={<span>Upload File</span>}
+            />,
         );
 
         expect(screen.getByText("Upload File")).toBeTruthy();

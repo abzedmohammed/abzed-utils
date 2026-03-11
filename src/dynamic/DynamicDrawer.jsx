@@ -5,7 +5,7 @@ export const DynamicDrawer = ({
     onClose,
     open,
     title,
-    children,
+    drawerBody,
     size = "22.5rem",
     placement = "right",
     className = "primary_drawer",
@@ -21,7 +21,7 @@ export const DynamicDrawer = ({
             {...drawerProps}
         >
             {title}
-            {children}
+            {drawerBody}
         </Drawer>
     );
 };
@@ -30,7 +30,7 @@ DynamicDrawer.propTypes = {
     onClose: PropTypes.func,
     open: PropTypes.bool,
     title: PropTypes.node,
-    children: PropTypes.node,
+    drawerBody: PropTypes.node.isRequired,
     size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     placement: PropTypes.oneOf(["left", "right", "top", "bottom"]),
     className: PropTypes.string,
