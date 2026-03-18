@@ -50,7 +50,7 @@ export const usePaginatedQuery = ({
 
 	const total = extractTotal(data) ?? 0;
 	const rawDataList = extractDataList(data);
-	const dataList = Array.isArray(rawDataList) ? rawDataList : [];
+	const dataList = rawDataList ?? [];
 
 	useEffect(() => {
 		setCurrentPage(1);

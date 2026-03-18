@@ -42,4 +42,25 @@ describe("usePaginatedQuery", () => {
             expect(queryFn).toHaveBeenCalled();
         });
     });
+
+    it("preserves non-array extracted data", async () => {
+        const queryFn = vi.fn(async () => ({
+            data: { total: 1, data: { result: { id: 1, name: "A" } } },
+        }));
+
+        const { result } = renderHook(
+            () =>
+                usePaginatedQuery({
+                    queryConfig: { queryKey: ["item"], queryFn },
+                    searchDelay: 10,
+                }),
+            { wrapper: createWrapper() },
+        );
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+        });
+
+        expect(result.current.dataList).toEqual({ id: 1, name: "A" });
+    });
 });
