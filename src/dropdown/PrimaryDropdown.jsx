@@ -42,7 +42,6 @@ const PrimaryDropdown = forwardRef(({
 
 	return (
         <Dropdown
-			ref={ref}
 			disabled={disabled}
 			onOpenChange={onOpenChange}
 			className={className}
@@ -52,7 +51,7 @@ const PrimaryDropdown = forwardRef(({
             classNames={resolvedClassNames}
             styles={resolvedStyles}
 		>
-            <div onClick={(e) => e.preventDefault()}>
+            <div ref={ref} onClick={(e) => e.preventDefault()}>
                 <Space>{triggerButton}</Space>
             </div>
 		</Dropdown>

@@ -9,6 +9,7 @@ export const FormInputPassword = ({
     className,
     inputClassName,
     readOnly,
+    disabled = false,
     prefix,
     suffix,
     iconRenderShow,
@@ -34,6 +35,7 @@ export const FormInputPassword = ({
                 variant="borderless"
                 placeholder={placeholder}
                 readOnly={readOnly}
+                disabled={disabled}
                 prefix={prefix}
                 suffix={suffix}
                 {...(showIconRender && {
@@ -53,6 +55,7 @@ FormInputPassword.propTypes = {
     className: PropTypes.string,
     inputClassName: PropTypes.string,
     readOnly: PropTypes.bool,
+    disabled: PropTypes.bool,
     prefix: PropTypes.node,
     suffix: PropTypes.node,
     iconRenderShow: PropTypes.node,

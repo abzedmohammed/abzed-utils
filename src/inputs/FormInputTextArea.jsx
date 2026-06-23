@@ -1,6 +1,7 @@
-import { Form } from "antd";
+import { Form, Input } from "antd";
 import PropTypes from "prop-types";
-import TextArea from "antd/es/input/TextArea";
+
+const { TextArea } = Input;
 
 export const FormInputTextArea = ({
     label,

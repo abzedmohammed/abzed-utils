@@ -8,6 +8,7 @@ export const FormInput = ({
     className,
     inputClassName,
     required = true,
+    disabled = false,
     readOnly,
     prefix,
     suffix,
@@ -31,6 +32,7 @@ export const FormInput = ({
                 suffix={suffix}
                 autoComplete="off"
                 readOnly={readOnly}
+                disabled={disabled}
                 className={inputClassName}
                 placeholder={placeholder}
             />
@@ -46,6 +48,7 @@ FormInput.propTypes = {
     inputClassName: PropTypes.string,
     required: PropTypes.bool,
     readOnly: PropTypes.bool,
+    disabled: PropTypes.bool,
     prefix: PropTypes.node,
     suffix: PropTypes.node,
     extraRules: PropTypes.arrayOf(PropTypes.object),

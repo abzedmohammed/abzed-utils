@@ -1,6 +1,8 @@
-import TextArea from 'antd/es/input/TextArea';
+import { Input } from 'antd';
 import PropTypes from 'prop-types';
 import { defaultInputStyle } from '../utils';
+
+const { TextArea } = Input;
 
 export const NormalInputTextArea = ({
 	label,

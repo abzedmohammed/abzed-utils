@@ -14,6 +14,12 @@ describe("formatters utils", () => {
         expect(value).toContain("1,234.50");
     });
 
+    it("formats money with currency code, commas and two decimals", () => {
+        expect(formatMoney(2000, "KES")).toBe("KES 2,000.00");
+        expect(formatMoney(0)).toBe("KES 0.00");
+        expect(formatMoney(1234567.5, "USD")).toBe("USD 1,234,567.50");
+    });
+
     it("formats file size", () => {
         expect(formatFileSize(0)).toBe("0 Bytes");
         expect(formatFileSize(1024)).toBe("1.00 KB");

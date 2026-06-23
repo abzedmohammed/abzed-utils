@@ -1,6 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useFetchPost = ({ url, body = {}, dependency, onRequestError }) => {
+const getByPath = (obj, path = []) =>
+	path.reduce((acc, key) => acc?.[key], obj);
+
+export const useFetchPost = ({
+	url,
+	body = {},
+	dependency,
+	onRequestError,
+	extractData = (response) => getByPath(response, ['data', 'result']),
+	extractErrorMessage = (response) => getByPath(response, ['message']),
+}) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState('');
 	const [data, setData] = useState([]);
@@ -42,14 +52,23 @@ export const useFetchPost = ({ url, body = {}, dependency, onRequestError }) => 
 						onRequestErrorRef.current?.();
 					}
 					if (isMounted) {
-						setIsError(`Request failed with status ${res.status}`);
+						let errorBody = null;
+						try {
+							errorBody = await res.json();
+						} catch {
+							errorBody = null;
+						}
+						setIsError(
+							extractErrorMessage(errorBody) ||
+								`Request failed with status ${res.status}`
+						);
 					}
 					return;
 				}
 
 				const response = await res.json();
 				if (isMounted) {
-					setData(response?.data?.result || []);
+					setData(extractData(response) ?? []);
 				}
 			} catch (error) {
 				if (error?.name !== 'AbortError' && isMounted) {

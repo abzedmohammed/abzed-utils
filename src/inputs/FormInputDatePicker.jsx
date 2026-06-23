@@ -58,7 +58,7 @@ export const FormInputDatePicker = ({
                 }
                 format={isTimePicker ? timeFormat : format}
                 suffixIcon={suffixIcon}
-                readOnly={readOnly}
+                inputReadOnly={readOnly}
                 placeholder={placeholder}
                 className={inputClassName}
                 picker={picker}

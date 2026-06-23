@@ -89,7 +89,7 @@ See `docs/COMPATIBILITY.md` for the host app dependency matrix.
 ### `formatters.js`
 | Export | Description |
 | --- | --- |
-| `formatMoney(amount, currency)` | Currency formatting using `Intl.NumberFormat`. |
+| `formatMoney(amount, currency)` | Currency-code formatting with comma grouping and two decimals, e.g. `formatMoney(2000)` → `KES 2,000.00`. |
 | `formatFileSize(bytes)` | Converts bytes to human-readable units. |
 | `formatFileName(fileName)` | Returns suffix after underscore (`_`). |
 | `formatImgPath(input)` | Supports `string` or `{ path, domain }`; resolves relative image paths. |
@@ -157,8 +157,8 @@ See `docs/COMPATIBILITY.md` for the host app dependency matrix.
 | `usePaginatedQuery` | Pagination/search/query abstraction with debounced search. |
 | `useSessionTimeout` | Activity timeout handler with auto logout + redirect. |
 | `useToggle` | Generic boolean toggle state helper. |
-| `useFetch` | GET fetch helper with token header, abort, and request-error callback. |
-| `useFetchPost` | POST fetch helper with token header, abort, and request-error callback. |
+| `useFetch` | GET fetch helper with token header, abort, request-error callback, and configurable `extractData` / `extractErrorMessage` extractors. |
+| `useFetchPost` | POST fetch helper with token header, abort, request-error callback, and configurable `extractData` / `extractErrorMessage` extractors. |
 | `usePrefersDarkMode` | Reads and subscribes to `prefers-color-scheme: dark`. |
 
 ### `useDynamicMutation` error callback compatibility
@@ -209,12 +209,12 @@ Legacy alias props were removed so each component now uses one event API.
 
 | Component | Standardized props |
 | --- | --- |
-| `DynamicBtn` | `onClick`, `loading`, `text` |
-| `DynamicDrawer` | `onClose`, `title`, `children`, `size` |
-| `PrimaryModal` | `onClose`, `header`, `children` |
-| `ActionModal` | `onClose`, `icon`, `header`, `actions` |
-| `DynamicFileInput` | `onFileChange`, `onUploadSuccess`, `onUploadError`, `children` |
-| `PrimaryDropdown` | `onOpenChange`, `children` |
+| `DynamicBtn` | `onClick`, `loading`, `text`, `icon`, `iconPlacement` |
+| `DynamicDrawer` | `onClose`, `open`, `title`, `drawerBody`, `size`, `placement` |
+| `PrimaryModal` | `onClose`, `open`, `header`, `body` |
+| `ActionModal` | `onClose`, `open`, `icon`, `header`, `actions` |
+| `DynamicFileInput` | `onFileChange`, `onUploadSuccess`, `onUploadError`, `body` |
+| `PrimaryDropdown` | `onOpenChange`, `items`, `triggerButton` |
 | `MainSearch` | `onSearchChange` |
 | Normal/Form input wrappers | `onValueChange` |
 
@@ -255,6 +255,10 @@ Legacy alias props were removed so each component now uses one event API.
 
 ## Recent Updates Included
 
+- `formatMoney` now renders the currency code with comma grouping and two decimals (`KES 2,000.00`); `formatNumberAddComma` is unchanged.
+- `useFetch` / `useFetchPost` accept configurable `extractData` and `extractErrorMessage` extractors (mirroring `useDynamicMutation`); error bodies are parsed defensively to surface backend messages.
+- `DatePicker` / `TimePicker` wrappers use the correct `inputReadOnly` antd prop.
+- `TextArea` wrappers import via the public `Input.TextArea` instead of a deep path.
 - `README` and metadata now match current public API.
 - `queryClient` updated for React Query v5 (`gcTime`).
 - `createBeforeUpload` now returns strict boolean for AntD Upload compatibility.

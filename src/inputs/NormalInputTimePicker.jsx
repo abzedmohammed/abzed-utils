@@ -24,7 +24,7 @@ export const NormalInputTimePicker = ({
             <TimePicker
                 prefix={prefix}
                 suffixIcon={suffixIcon}
-				readOnly={readOnly}
+				inputReadOnly={readOnly}
 				value={value}
 				onChange={(val) =>
 					onValueChange?.(

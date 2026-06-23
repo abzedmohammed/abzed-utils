@@ -9,6 +9,7 @@ export const FormInputNumber = ({
     inputClassName,
     required = true,
     readOnly,
+    disabled = false,
     prefix,
     suffix,
     formatter,
@@ -40,6 +41,7 @@ export const FormInputNumber = ({
                 className={inputClassName}
                 placeholder={placeholder}
                 readOnly={readOnly}
+                disabled={disabled}
             />
         </Form.Item>
     );
@@ -53,6 +55,7 @@ FormInputNumber.propTypes = {
     inputClassName: PropTypes.string,
     required: PropTypes.bool,
     readOnly: PropTypes.bool,
+    disabled: PropTypes.bool,
     prefix: PropTypes.node,
     suffix: PropTypes.node,
     formatter: PropTypes.func,

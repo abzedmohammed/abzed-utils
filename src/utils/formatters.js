@@ -1,10 +1,9 @@
 // src/formatters.js
 export const formatMoney = (amount = 0, currency = "KES") =>
-    new Intl.NumberFormat("en-KE", {
-        style: "currency",
-        currency,
+    `${currency} ${new Intl.NumberFormat("en-US", {
         minimumFractionDigits: 2,
-    }).format(amount);
+        maximumFractionDigits: 2,
+    }).format(amount)}`;
 
 export const formatFileSize = (bytes = 0) => {
     if (bytes === 0) return "0 Bytes";

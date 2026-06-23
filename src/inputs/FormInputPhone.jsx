@@ -12,6 +12,7 @@ export const FormInputPhone = ({
     inputClassName,
     defaultCountry = "KE",
     readOnly,
+    disabled = false,
     placeholder = "Enter phone number",
     extraRules = [],
 }) => {
@@ -36,6 +37,7 @@ export const FormInputPhone = ({
                 flags={flags}
                 defaultCountry={defaultCountry}
                 placeholder={placeholder}
+                disabled={disabled}
             />
         </Form.Item>
     );
@@ -50,6 +52,7 @@ FormInputPhone.propTypes = {
     inputClassName: PropTypes.string,
     defaultCountry: PropTypes.string,
     readOnly: PropTypes.bool,
+    disabled: PropTypes.bool,
     placeholder: PropTypes.string,
     extraRules: PropTypes.arrayOf(PropTypes.object),
 };

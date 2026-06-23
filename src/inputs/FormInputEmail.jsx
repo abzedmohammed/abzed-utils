@@ -9,6 +9,7 @@ export const FormInputEmail = ({
     inputClassName,
     required = true,
     readOnly,
+    disabled = false,
     prefix,
     suffix,
     extraRules = [],
@@ -30,6 +31,7 @@ export const FormInputEmail = ({
                 prefix={prefix}
                 suffix={suffix}
                 readOnly={readOnly}
+                disabled={disabled}
                 className={inputClassName}
                 type="email"
                 placeholder={placeholder}
@@ -46,6 +48,7 @@ FormInputEmail.propTypes = {
     inputClassName: PropTypes.string,
     required: PropTypes.bool,
     readOnly: PropTypes.bool,
+    disabled: PropTypes.bool,
     prefix: PropTypes.node,
     suffix: PropTypes.node,
     extraRules: PropTypes.arrayOf(PropTypes.object),
